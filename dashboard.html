@@ -202,6 +202,99 @@
 
         </header>
 
+
+        <!-- ================================================== -->
+        <!-- LISTA DE CONVIDADOS -->
+        <!-- ================================================== -->
+
+        <section class="dashboard-guests section">
+
+            <div class="container">
+
+                <div class="stack">
+
+                    <!-- Cabeçalho da Seção -->
+
+                    <header class="section-header dashboard-section-header">
+
+                        <div class="dashboard-section-content stack">
+
+                            <h2 class="section-title">
+                                Lista de Convidados
+                            </h2>
+
+                            <p class="section-subtitle">
+                                Relação completa dos convidados que responderam ao
+                                formulário de RSVP, organizada em ordem alfabética.
+                            </p>
+
+                        </div>
+
+                        <div class="dashboard-section-actions cluster">
+
+                            <button
+                                type="button"
+                                id="exportPdf"
+                                class="btn btn-secondary">
+
+                                Exportar PDF
+
+                            </button>
+
+                            <button
+                                type="button"
+                                id="exportExcel"
+                                class="btn btn-primary">
+
+                                Exportar Excel
+
+                            </button>
+
+                        </div>
+
+                    </header>
+
+                    <!-- Tabela -->
+
+                    <div class="surface dashboard-table-wrapper">
+
+                        <table class="dashboard-table">
+
+                            <thead>
+
+                                <tr id="guestTableHeader">
+
+                                    <th>Convidado</th>
+
+                                    <th>Confirmação</th>
+
+                                    <th>Acompanhantes</th>
+
+                                    <th>Data da Resposta</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="guestTableBody">
+
+                                <!--
+                                    As linhas serão inseridas
+                                    dinamicamente pelo JavaScript.
+                                -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
         <!-- ================================================== -->
         <!-- ESTATÍSTICAS -->
         <!-- ================================================== -->
@@ -357,98 +450,6 @@
 
                 </div>
             </div>
-        </section>
-
-        <!-- ================================================== -->
-        <!-- LISTA DE CONVIDADOS -->
-        <!-- ================================================== -->
-
-        <section class="dashboard-guests section">
-
-            <div class="container">
-
-                <div class="stack">
-
-                    <!-- Cabeçalho da Seção -->
-
-                    <header class="section-header dashboard-section-header">
-
-                        <div class="dashboard-section-content stack">
-
-                            <h2 class="section-title">
-                                Lista de Convidados
-                            </h2>
-
-                            <p class="section-subtitle">
-                                Relação completa dos convidados que responderam ao
-                                formulário de RSVP, organizada em ordem alfabética.
-                            </p>
-
-                        </div>
-
-                        <div class="dashboard-section-actions cluster">
-
-                            <button
-                                type="button"
-                                id="exportPdf"
-                                class="btn btn-secondary">
-
-                                Exportar PDF
-
-                            </button>
-
-                            <button
-                                type="button"
-                                id="exportExcel"
-                                class="btn btn-primary">
-
-                                Exportar Excel
-
-                            </button>
-
-                        </div>
-
-                    </header>
-
-                    <!-- Tabela -->
-
-                    <div class="surface dashboard-table-wrapper">
-
-                        <table class="dashboard-table">
-
-                            <thead>
-
-                                <tr id="guestTableHeader">
-
-                                    <th>Convidado</th>
-
-                                    <th>Confirmação</th>
-
-                                    <th>Acompanhantes</th>
-
-                                    <th>Data da Resposta</th>
-
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="guestTableBody">
-
-                                <!--
-                                    As linhas serão inseridas
-                                    dinamicamente pelo JavaScript.
-                                -->
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </div>
-
         </section>
 
         <!-- ================================================== -->
