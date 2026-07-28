@@ -129,7 +129,7 @@
 .stats-card {
     display: flex;
     justify-content: center;
-    min-height: 8rem;
+    min-height: 9.5rem;
     text-align: center;
 }
 .stats-card-content {
@@ -138,16 +138,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: .5rem;
+    gap: .9rem;
 }
 .stats-card-label {
     font-size: var(--text-sm);
     color: var(--color-text-muted);
 }
 .stats-card-value {
-    font-size: var(--text-3xl);
-    font-weight: var(--text-bold);
-    line-height: var(--line-height-tight);
+    font-size: var(--text-md);
+    font-weight: var(--text-regular);
+    line-height: var(--line-height-normal);
 }
 
 /* ================================================== */
