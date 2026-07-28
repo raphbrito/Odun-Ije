@@ -22,7 +22,11 @@ const config = {
 
         googleMaps: "https://www.google.com/maps/dir//R.+Mariana+do+Ros%C3%A1rio,+109+-+Vila+Recreio,+Mag%C3%A9+-+RJ,+25900-970/@-22.7749,-43.2914,17z/data=!4m18!1m8!3m7!1s0x990ad239448339:0x56e548d8d0f97534!2sR.+Mariana+do+Ros%C3%A1rio,+109+-+Vila+Recreio,+Mag%C3%A9+-+RJ,+25900-970!3b1!8m2!3d-22.6450252!4d-43.2053367!16s%2Fg%2F11x64xg80t!4m8!1m0!1m5!1m1!1s0x990ad239448339:0x56e548d8d0f97534!2m2!1d-43.2053367!2d-22.6450252!3e0!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDcyMi4wIKXMDSoASAFQAw%3D%3D",
 
-        waze: "https://waze.com/ul/h75cr0vdgj"
+        waze: "https://waze.com/ul/h75cr0vdgj",
+
+        aseesmeralda: "https://www.instagram.com/aseesmeralda/",
+
+        asetopazio: "https://www.instagram.com/asetopazio/"
 
     },
 
@@ -70,7 +74,11 @@ const dom = {
 
         googleMaps: document.getElementById("btnGoogleMaps"),
 
-        waze: document.getElementById("btnWaze")
+        waze: document.getElementById("btnWaze"),
+
+        aseesmeralda: document.getElementById("btnAseEsmeralda"),
+        
+        asetopazio: document.getElementById("btnAseTopazio")
 
     },
 
@@ -118,14 +126,6 @@ document.addEventListener(
 
 );
 
-/* ==========================================================
-   FIM DA PARTE 1
-========================================================== */
-
-/* ==========================================================
-   INÍCIO DA PARTE 2
-   CONTAGEM REGRESSIVA
-========================================================== */
 /* ==========================================================
    CONTAGEM REGRESSIVA
 ========================================================== */
@@ -357,14 +357,6 @@ function initializeFooter() {
 }
 
 /* ==========================================================
-   FIM DA PARTE 2
-========================================================== */
-
-/* ==========================================================
-   INÍCIO DA PARTE 3
-   BOTÕES E NAVEGAÇÃO
-========================================================== */
-/* ==========================================================
    BOTÕES E NAVEGAÇÃO
 ========================================================== */
 
@@ -401,6 +393,30 @@ function initializeButtons() {
             "click",
 
             openWaze
+
+        );
+
+    }
+
+    if (dom.buttons.aseesmeralda) {
+
+        dom.buttons.aseesmeralda.addEventListener(
+
+            "click",
+
+            openAseEsmeralda
+
+        );
+
+    }
+
+    if (dom.buttons.asetopazio) {
+
+        dom.buttons.asetopazio.addEventListener(
+
+            "click",
+
+            openAseTopazio
 
         );
 
@@ -499,6 +515,66 @@ function openWaze() {
 }
 
 /* ==========================================================
+   ASE ESMERALDA
+========================================================== */
+
+function openAseEsmeralda() {
+
+    if (!config.urls.aseesmeralda) {
+
+        showToast(
+
+            "Em breve",
+
+            "O instagram do Igbá Àṣẹ Iyá Aféfé Igbin Lórun ainda não foi configurado.",
+
+            "warning"
+
+        );
+
+        return;
+
+    }
+
+    openExternalLink(
+
+        config.urls.aseesmeralda
+
+    );
+
+}
+
+/* ==========================================================
+   ASE TOPAZIO
+========================================================== */
+
+function openAseTopazio() {
+
+    if (!config.urls.asetopazio) {
+
+        showToast(
+
+            "Em breve",
+
+            "O instagram do Ilé Àṣẹ Iyá Ypondá ainda não foi configurado.",
+
+            "warning"
+
+        );
+
+        return;
+
+    }
+
+    openExternalLink(
+
+        config.urls.asetopazio
+
+    );
+
+}
+
+/* ==========================================================
    LINKS EXTERNOS
 ========================================================== */
 
@@ -516,14 +592,6 @@ function openExternalLink(url) {
 
 }
 
-/* ==========================================================
-   FIM DA PARTE 3
-========================================================== */
-
-/* ==========================================================
-   INÍCIO DA PARTE 4
-   TOAST • PÁGINA • INICIALIZAÇÃO
-========================================================== */
 /* ==========================================================
    TOAST
 ========================================================== */
@@ -651,7 +719,3 @@ function initialize() {
     initializeToast();
 
 }
-
-/* ==========================================================
-   FIM DO ARQUIVO
-========================================================== */
