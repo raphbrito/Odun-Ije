@@ -733,6 +733,24 @@ small {
     gap: var(--space-3xl);
     flex-wrap: wrap;
 }
+.footer-brand-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    padding: 0;
+    transition:
+        transform var(--transition-fast),
+        opacity var(--transition-fast);
+}
+.footer-brand-link:hover {
+    transform: translateY(-3px);
+}
+.footer-brand-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: .5rem;
+}
 .footer-logo {
     width: 90px;
     opacity: .95;
