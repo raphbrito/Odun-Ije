@@ -119,6 +119,64 @@ document.addEventListener(
 );
 
 /* ==========================================================
+   INFORMAÇÕES DO EVENTO
+========================================================== */
+
+function initializeEventInformation() {
+
+    const eventDate = new Date(
+
+        config.event.date
+
+    );
+
+    dom.event.date.textContent =
+
+        eventDate.toLocaleDateString(
+
+            "pt-BR",
+
+            {
+
+                weekday: "long",
+
+                day: "2-digit",
+
+                month: "long",
+
+                year: "numeric"
+
+            }
+
+        );
+
+    dom.event.time.textContent =
+
+        eventDate.toLocaleTimeString(
+
+            "pt-BR",
+
+            {
+
+                hour: "2-digit",
+
+                minute: "2-digit"
+
+            }
+
+        );
+
+    dom.event.location.textContent =
+
+        config.event.location;
+
+    dom.event.address.textContent =
+
+        config.event.address;
+
+}
+
+/* ==========================================================
    CONTAGEM REGRESSIVA
 ========================================================== */
 
@@ -275,64 +333,6 @@ function formatNumber(value) {
         "0"
 
     );
-
-}
-
-/* ==========================================================
-   INFORMAÇÕES DO EVENTO
-========================================================== */
-
-function initializeEventInformation() {
-
-    const eventDate = new Date(
-
-        config.event.date
-
-    );
-
-    dom.event.date.textContent =
-
-        eventDate.toLocaleDateString(
-
-            "pt-BR",
-
-            {
-
-                weekday: "long",
-
-                day: "2-digit",
-
-                month: "long",
-
-                year: "numeric"
-
-            }
-
-        );
-
-    dom.event.time.textContent =
-
-        eventDate.toLocaleTimeString(
-
-            "pt-BR",
-
-            {
-
-                hour: "2-digit",
-
-                minute: "2-digit"
-
-            }
-
-        );
-
-    dom.event.location.textContent =
-
-        config.event.location;
-
-    dom.event.address.textContent =
-
-        config.event.address;
 
 }
 
