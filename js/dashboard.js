@@ -353,7 +353,7 @@ function formatCompanions(acompanhantes) {
     const total =
         Number(acompanhantes ?? 0);
     if (total === 0) {
-        return "Nenhum";
+        return "0";
     }
     if (total === 1) {
         return "1";
