@@ -259,6 +259,7 @@ small {
     font-size: var(--text-2xl);
 }
 .section-subtitle {
+    align-items: center;
     max-width: var(--measure-lg);
     color: var(--color-text-muted);
 }
