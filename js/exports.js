@@ -227,7 +227,7 @@ const Exports = (() => {
         buildOfficialTable(document, confirmedGuests);
 
         document.save(
-            generateFilename(CONFIG.exportTypes.official)
+            `${generateFilename(CONFIG.exportTypes.official)}.pdf`
         );
 
     }
@@ -256,7 +256,7 @@ const Exports = (() => {
         buildReceptionTable(document, confirmedGuests);
 
         document.save(
-            generateFilename(CONFIG.exportTypes.reception)
+            `${generateFilename(CONFIG.exportTypes.reception)}.pdf`
         );
 
     }
@@ -338,7 +338,7 @@ const Exports = (() => {
 
         XLSX.writeFile(
             workbook,
-            generateFilename(CONFIG.exportTypes.excel)
+            `${generateFilename(CONFIG.exportTypes.excel)}.xlsx`
         );
 
     }
