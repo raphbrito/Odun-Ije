@@ -356,9 +356,9 @@ function formatCompanions(acompanhantes) {
         return "Nenhum";
     }
     if (total === 1) {
-        return "1 acompanhante";
+        return "1";
     }
-    return `${total} acompanhantes`;
+    return `${total}`;
 }
 function formatResponseDate(dataResposta) {
     if (!dataResposta) {

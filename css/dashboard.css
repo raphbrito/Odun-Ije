@@ -234,6 +234,6 @@
         width: 4rem;
     }
     .stats-card-value {
-        font-size: var(--text-2xl);
+        font-size: var(--text-md);
     }
 }
