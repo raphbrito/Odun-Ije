@@ -95,6 +95,7 @@ async function fetchDashboardData(username, password) {
 /* ================================================== */
 
 function initialize() {
+    Exports.init();
     registerEvents();
     showLogin();
 }
@@ -448,6 +449,18 @@ function registerEvents() {
 }
 
 /* ================================================== */
+/* CONTEXTO DE EXPORTAÇÃO */
+/* ================================================== */
+
+function createExportContext() {
+    return {
+        event: EVENTO,
+        guests: state.dashboard?.convidados ?? [],
+        generatedAt: new Date()
+    };
+}
+
+/* ================================================== */
 /* HANDLERS */
 /* ================================================== */
 
@@ -468,15 +481,30 @@ function handleResize() {
     updateGuestsTable();
 }
 function handleExportPdf() {
+    if (!state.dashboard) {
+        showToast(
+            "Nenhum dado disponível para exportação.",
+            "error"
+        );
+        return;
+    }
+    const context = createExportContext();
+    Exports.exportOfficialPdf(context);
     showToast(
-        "Exportação em PDF em desenvolvimento.",
-        "error"
+        "PDF gerado com sucesso."
     );
 }
 function handleExportExcel() {
+    if (!state.dashboard) {
+        showToast(
+            "Nenhum dado disponível para exportação.",
+            "error"
+        );
+        return;
+    }
+    const context = createExportContext();
+    Exports.exportExcel(context);
     showToast(
-        "Exportação em Excel em desenvolvimento.",
-        "error"
+        "Planilha gerada com sucesso."
     );
 }
-
