@@ -190,6 +190,20 @@
     width: 100%;
     border-collapse: collapse;
 }
+.dashboard-table th,
+.dashboard-table td {
+    padding: .75rem 1rem;
+    text-align: center;
+}
+.dashboard-table th:first-child,
+.dashboard-table td:first-child {
+    text-align: left;
+}
+.dashboard-table th:first-child,
+.dashboard-table td:first-child {
+    text-align: left;
+    width: 35%;
+}
 
 /* ================================================== */
 /* RESPONSIVIDADE */
