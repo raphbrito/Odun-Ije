@@ -235,5 +235,7 @@
     }
     .stats-card-value {
         font-size: var(--text-md);
+        font-weight: var(--text-regular);
+        line-height: var(--line-height-normal);
     }
 }
