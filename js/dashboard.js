@@ -2,40 +2,62 @@
 /* ELEMENTOS */
 /* ================================================== */
 
-const elements = {
+const dom = {
 
     /* Login */
+
     login: document.getElementById("login"),
+
     loginForm: document.getElementById("loginForm"),
+
     username: document.getElementById("username"),
+
     password: document.getElementById("password"),
 
     /* Dashboard */
+
     dashboard: document.getElementById("dashboard"),
+
     logoutButton: document.getElementById("logoutButton"),
 
     /* Estatísticas */
+
     totalRsvp: document.getElementById("totalRsvp"),
+
     totalConfirmed: document.getElementById("totalConfirmed"),
+
     totalCompanions: document.getElementById("totalCompanions"),
+
     totalPeople: document.getElementById("totalPeople"),
+
     totalAbsent: document.getElementById("totalAbsent"),
+
     confirmationRate: document.getElementById("confirmationRate"),
+
     averageCompanions: document.getElementById("averageCompanions"),
+
     lastResponse: document.getElementById("lastResponse"),
+
     lastUpdate: document.getElementById("statsLastUpdate"),
 
     /* Lista de convidados */
+
     guestTableHeader: document.getElementById("guestTableHeader"),
+
     guestTableBody: document.getElementById("guestTableBody"),
+
     exportPdf: document.getElementById("exportPdf"),
+
     exportExcel: document.getElementById("exportExcel"),
 
     /* Toast */
+
     toast: document.getElementById("toast"),
+
     toastMessage: document.getElementById("toastMessage"),
 
     /* Utilidades */
+
     currentYear: document.getElementById("currentYear")
 
 };
@@ -44,21 +66,48 @@ const elements = {
 /* CONFIGURAÇÃO */
 /* ================================================== */
 
-const CONFIG = {
-    API_URL:
-        "https://script.google.com/macros/s/AKfycbwPJ9a8noNHjAd5XqBkvjqqO7_ZSVZbx8sRPpxUjcDwjO-XgAtTuqutwSWPOr5q82tCnA/exec",
-    MOBILE_BREAKPOINT: 768,
-    TOAST_DURATION: 3000,
-    RESIZE_DEBOUNCE: 150
+const config = {
+
+    api: {
+
+        url: "https://script.google.com/macros/s/AKfycbwPJ9a8noNHjAd5XqBkvjqqO7_ZSVZbx8sRPpxUjcDwjO-XgAtTuqutwSWPOr5q82tCnA/exec"
+
+    },
+
+    layout: {
+
+        mobileBreakpoint: 768,
+
+        resizeDebounce: 150
+
+    },
+
+    toast: {
+
+        duration: 3000
+
+    }
+
 };
+
+/* ================================================== */
+/* DADOS DO EVENTO */
+/* ================================================== */
+
+const event = EVENTO;
 
 /* ================================================== */
 /* ESTADO DA APLICAÇÃO */
 /* ================================================== */
 
 const state = {
+
     authenticated: false,
-    dashboard: null
+
+    dashboard: null,
+
+    toastTimer: null
+
 };
 
 /* ================================================== */
@@ -66,28 +115,63 @@ const state = {
 /* ================================================== */
 
 async function request(params = {}) {
-    const url = new URL(CONFIG.API_URL);
-    Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-            url.searchParams.append(
-                key,
-                value
-            );
+
+    const url = new URL(
+
+        config.api.url
+
+    );
+
+    Object.entries(params).forEach(
+
+        ([key, value]) => {
+
+            if (value !== undefined && value !== null) {
+
+                url.searchParams.append(
+
+                    key,
+
+                    value
+
+                );
+
+            }
+
         }
-    });
-    const response = await fetch(url);
+
+    );
+
+    const response = await fetch(
+
+        url
+
+    );
+
     if (!response.ok) {
+
         throw new Error(
+
             "Não foi possível conectar ao servidor."
+
         );
+
     }
+
     return await response.json();
+
 }
+
 async function fetchDashboardData(username, password) {
+
     return await request({
+
         usuario: username,
+
         senha: password
+
     });
+
 }
 
 /* ================================================== */
@@ -162,7 +246,7 @@ function showDashboard() {
     elements.login.hidden = true;
     elements.dashboard.hidden = false;
     updateStatistics();
-    updateGuestsTable();
+    renderGuestsTable();
     updateLastUpdate();
 }
 function showLogin() {
@@ -215,7 +299,7 @@ function updateLastUpdate() {
 /* TABELA */
 /* ================================================== */
 
-function updateGuestsTable() {
+function renderGuestsTable() {
     const convidados =
         state.dashboard?.convidados ?? [];
     const mobile =
@@ -371,30 +455,57 @@ function formatResponseDate(dataResposta) {
 /* TOAST */
 /* ================================================== */
 
-let toastTimeout = null;
 function showToast(
     message,
     type = "success"
 ) {
-    clearTimeout(toastTimeout);
-    elements.toastMessage.textContent =
+
+    window.clearTimeout(
+
+        state.toastTimer
+
+    );
+
+    dom.toastMessage.textContent =
+
         message;
-    elements.toast.className =
+
+    dom.toast.className =
+
         `toast toast-${type}`;
-    elements.toast.classList.add(
+
+    dom.toast.classList.add(
+
         "is-visible"
+
     );
-    toastTimeout = setTimeout(
+
+    state.toastTimer = window.setTimeout(
+
         hideToast,
-        CONFIG.TOAST_DURATION
+
+        config.toast.duration
+
     );
+
 }
+
 function hideToast() {
-    clearTimeout(toastTimeout);
-    elements.toast.classList.remove(
-        "is-visible"
+
+    window.clearTimeout(
+
+        state.toastTimer
+
     );
-    toastTimeout = null;
+
+    dom.toast.classList.remove(
+
+        "is-visible"
+
+    );
+
+    state.toastTimer = null;
+
 }
 
 /* ================================================== */
@@ -402,23 +513,45 @@ function hideToast() {
 /* ================================================== */
 
 function isMobileLayout() {
+
     return (
+
         window.innerWidth <=
-        CONFIG.MOBILE_BREAKPOINT
+
+        config.layout.mobileBreakpoint
+
     );
+
 }
+
 function debounce(
+
     callback,
-    delay = CONFIG.RESIZE_DEBOUNCE
+
+    delay = config.layout.resizeDebounce
+
 ) {
+
     let timeout;
+
     return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(
-            () => callback(...args),
-            delay
+
+        window.clearTimeout(
+
+            timeout
+
         );
+
+        timeout = window.setTimeout(
+
+            () => callback(...args),
+
+            delay
+
+        );
+
     };
+
 }
 
 /* ================================================== */
@@ -453,11 +586,39 @@ function registerEvents() {
 /* ================================================== */
 
 function createExportContext() {
+
     return {
-        event: EVENTO,
-        guests: state.dashboard?.convidados ?? [],
-        generatedAt: new Date()
+
+        event: {
+
+            name: event.nome,
+
+            date: DateUtils.long(
+
+                event.data
+
+            ),
+
+            time: event.horario,
+
+            location: event.local,
+
+            address: event.endereco,
+
+            city: `${event.cidade}/${event.estado}`
+
+        },
+
+        generatedAt: new Date(),
+
+        generatedAtFormatted: DateUtils.full(
+
+            new Date()
+
+        )
+
     };
+
 }
 
 /* ================================================== */
@@ -478,7 +639,7 @@ function handleResize() {
     ) {
         return;
     }
-    updateGuestsTable();
+    renderGuestsTable();
 }
 function handleExportPdf() {
     if (!state.dashboard) {

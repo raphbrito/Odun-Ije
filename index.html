@@ -23,7 +23,7 @@
 
     <meta
         name="author"
-        content="Ilé Àṣẹ Iyá Ypondá">
+        content="Eventos de Axé">
 
     <!-- ==========================================================
          OPEN GRAPH
@@ -64,13 +64,15 @@
     =========================================================== -->
 
     <link
+        id="favicon"
         rel="icon"
-        type="image/png"
-        href="img/brasao2.png">
+        type="image/x-icon"
+        href="img/favicon/logo-evento.ico">
 
     <link
+        id="apple-touch-icon"
         rel="apple-touch-icon"
-        href="img/brasao2.png">
+        href="img/favicon/logo-evento.ico">
 
     <!-- ==========================================================
          GOOGLE FONTS
@@ -130,7 +132,7 @@
 
     <main class="page">
         <!-- ======================================================
-             HERO
+            HERO
         ======================================================= -->
         <section
             class="section hero"
@@ -143,16 +145,17 @@
                     <div class="hero-layout">
 
                         <!-- ==========================================
-                             LOGO
+                            LOGO
                         =========================================== -->
 
                         <img
+                            id="heroLogo"
                             class="hero-logo"
                             src="img/logo-evento.png"
-                            alt="Logo do Òdún Ìjé">
+                            alt="Logo do Evento">
 
                         <!-- ==========================================
-                             TEXTO
+                            TEXTO
                         =========================================== -->
 
                         <div class="hero-text">
@@ -164,33 +167,37 @@
 
                             </p>
 
-                            <h1 class="hero-title">
+                            <h1
+                                id="heroTitle"
+                                class="hero-title">
 
-                                Òdún Ìjé
+                                --
 
                             </h1>
 
-                            <h2 class="hero-name">
+                            <h2
+                                id="heroName"
+                                class="hero-name">
 
-                                Rafael de Oxum
+                                --
 
                             </h2>
 
-                            <p class="hero-description">
+                            <p
+                                id="heroDescription"
+                                class="hero-description">
 
-                                Com alegria e profunda gratidão,
-                                convido você para compartilhar
-                                este momento tão especial
-                                da minha caminhada espiritual.
+                                --
 
                             </p>
 
                         </div>
 
                         <!-- ==========================================
-                             AÇÕES
-                        ===============================================
+                            AÇÕES
+                        =========================================== -->
 
+                        <!--
                         <div class="hero-actions">
 
                             <a
@@ -222,10 +229,7 @@
                             </a>
 
                         </div>
-
-                        ===============================================
-                             FIM DAS AÇÕES
-                        ========================================== --->
+                        -->
 
                     </div>
 
@@ -236,7 +240,7 @@
         </section>
 
         <!-- ======================================================
-             INFORMAÇÕES DO EVENTO
+            INFORMAÇÕES DO EVENTO
         ======================================================= -->
         <section
             class="section event-info"
@@ -268,7 +272,7 @@
                         <div class="grid cols-2">
 
                             <!-- ======================================
-                                 DATA
+                                DATA
                             ======================================= -->
 
                             <article class="card info-card">
@@ -287,7 +291,8 @@
 
                                     </h3>
 
-                                    <p id="eventDate">
+                                    <p
+                                        id="eventDate">
 
                                         --
 
@@ -298,7 +303,7 @@
                             </article>
 
                             <!-- ======================================
-                                 HORÁRIO
+                                HORÁRIO
                             ======================================= -->
 
                             <article class="card info-card">
@@ -317,7 +322,8 @@
 
                                     </h3>
 
-                                    <p id="eventTime">
+                                    <p
+                                        id="eventTime">
 
                                         --
 
@@ -328,7 +334,7 @@
                             </article>
 
                             <!-- ======================================
-                                 LOCAL
+                                LOCAL
                             ======================================= -->
 
                             <article class="card info-card">
@@ -347,7 +353,8 @@
 
                                     </h3>
 
-                                    <p id="eventLocation">
+                                    <p
+                                        id="eventLocation">
 
                                         --
 
@@ -358,7 +365,7 @@
                             </article>
 
                             <!-- ======================================
-                                 ENDEREÇO
+                                ENDEREÇO
                             ======================================= -->
 
                             <article class="card info-card">
@@ -377,7 +384,8 @@
 
                                     </h3>
 
-                                    <p id="eventAddress">
+                                    <p
+                                        id="eventAddress">
 
                                         --
 
@@ -398,7 +406,7 @@
         </section>
 
         <!-- ======================================================
-             CONTAGEM REGRESSIVA
+            CONTAGEM REGRESSIVA
         ======================================================= -->
         <section
             class="section countdown"
@@ -418,87 +426,83 @@
 
                         <p class="section-subtitle">
 
-                            Estamos nos aproximando deste grande dia.
+                            Faltam apenas...
 
                         </p>
 
                     </header>
 
-                    <div class="section-body">
+                    <div class="countdown-grid">
 
-                        <div class="grid grid-4">
+                        <div class="countdown-item">
 
-                            <article class="card countdown-card">
+                            <span
+                                id="days"
+                                class="countdown-number">
 
-                                <span
-                                    id="days"
-                                    class="countdown-value">
+                                00
 
-                                    000
+                            </span>
 
-                                </span>
+                            <span class="countdown-label">
 
-                                <span class="countdown-label">
+                                Dias
 
-                                    Dias
+                            </span>
 
-                                </span>
+                        </div>
 
-                            </article>
+                        <div class="countdown-item">
 
-                            <article class="card countdown-card">
+                            <span
+                                id="hours"
+                                class="countdown-number">
 
-                                <span
-                                    id="hours"
-                                    class="countdown-value">
+                                00
 
-                                    00
+                            </span>
 
-                                </span>
+                            <span class="countdown-label">
 
-                                <span class="countdown-label">
+                                Horas
 
-                                    Horas
+                            </span>
 
-                                </span>
+                        </div>
 
-                            </article>
+                        <div class="countdown-item">
 
-                            <article class="card countdown-card">
+                            <span
+                                id="minutes"
+                                class="countdown-number">
 
-                                <span
-                                    id="minutes"
-                                    class="countdown-value">
+                                00
 
-                                    00
+                            </span>
 
-                                </span>
+                            <span class="countdown-label">
 
-                                <span class="countdown-label">
+                                Minutos
 
-                                    Minutos
+                            </span>
 
-                                </span>
+                        </div>
 
-                            </article>
+                        <div class="countdown-item">
 
-                            <article class="card countdown-card">
+                            <span
+                                id="seconds"
+                                class="countdown-number">
 
-                                <span
-                                    id="seconds"
-                                    class="countdown-value">
+                                00
 
-                                    00
+                            </span>
 
-                                </span>
+                            <span class="countdown-label">
 
-                                <span class="countdown-label">
+                                Segundos
 
-                                    Segundos
-
-                                </span>
-
-                            </article>
+                            </span>
 
                         </div>
 
@@ -511,7 +515,7 @@
         </section>
 
         <!-- ======================================================
-             CONFIRMAÇÃO DE PRESENÇA
+            RSVP
         ======================================================= -->
         <section
             class="section rsvp"
@@ -529,53 +533,31 @@
 
                         </h2>
 
-                        <p class="section-subtitle">
+                        <p
+                            id="rsvpDescription"
+                            class="section-subtitle">
 
-                            Sua confirmação é muito importante para que
-                            possamos organizar este momento com todo o
-                            carinho que ele merece.
+                            Sua confirmação nos ajuda na organização do evento.
 
                         </p>
 
                     </header>
 
-                    <div class="section-body">
+                    <div class="rsvp-content">
 
-                        <div class="rsvp-layout">
+                        <button
+                            id="confirmButton"
+                            class="btn btn-primary">
 
-                            <div class="icon-circle icon-circle-lg">
+                            <i class="fa-brands fa-whatsapp"></i>
 
-                                <i class="fa-solid fa-envelope-open-text"></i>
+                            <span>
 
-                            </div>
+                                Confirmar Presença
 
-                            <p>
+                            </span>
 
-                                Clique no botão abaixo para confirmar sua
-                                presença através do formulário oficial.
-
-                            </p>
-
-                            <div class="rsvp-actions">
-
-                                <button
-                                    id="btnRSVP"
-                                    class="btn btn-primary"
-                                    type="button">
-
-                                    <i class="fa-solid fa-paper-plane"></i>
-
-                                    <span>
-
-                                        Confirmar Presença
-
-                                    </span>
-
-                                </button>
-
-                            </div>
-
-                        </div>
+                        </button>
 
                     </div>
 
@@ -586,11 +568,11 @@
         </section>
 
         <!-- ======================================================
-             COMO CHEGAR
+            COMO CHEGAR
         ======================================================= -->
         <section
-            class="section directions"
-            id="directions">
+            class="section location"
+            id="location">
 
             <div class="container">
 
@@ -604,67 +586,45 @@
 
                         </h2>
 
-                        <p class="section-subtitle">
+                        <p
+                            id="locationDescription"
+                            class="section-subtitle">
 
-                            Escolha seu aplicativo de navegação
-                            preferido e trace a melhor rota.
+                            Escolha o aplicativo de navegação de sua preferência.
 
                         </p>
 
                     </header>
 
-                    <div class="section-body">
+                    <div class="location-actions">
 
-                        <div class="directions-layout">
+                        <button
+                            id="googleMapsButton"
+                            class="btn btn-primary">
 
-                            <div class="icon-circle icon-circle-lg">
+                            <i class="fa-brands fa-google"></i>
 
-                                <i class="fa-solid fa-route"></i>
+                            <span>
 
-                            </div>
+                                Abrir no Google Maps
 
-                            <p>
+                            </span>
 
-                                Toque em um dos botões abaixo para abrir
-                                automaticamente a localização do evento.
+                        </button>
 
-                            </p>
+                        <button
+                            id="wazeButton"
+                            class="btn btn-secondary">
 
-                            <div class="directions-actions">
+                            <i class="fa-solid fa-location-arrow"></i>
 
-                                <button
-                                    id="btnGoogleMaps"
-                                    class="btn btn-primary"
-                                    type="button">
+                            <span>
 
-                                    <i class="fa-brands fa-google"></i>
+                                Abrir no Waze
 
-                                    <span>
+                            </span>
 
-                                        Google Maps
-
-                                    </span>
-
-                                </button>
-
-                                <button
-                                    id="btnWaze"
-                                    class="btn btn-secondary"
-                                    type="button">
-
-                                    <i class="fa-brands fa-waze"></i>
-
-                                    <span>
-
-                                        Waze
-
-                                    </span>
-
-                                </button>
-
-                            </div>
-
-                        </div>
+                        </button>
 
                     </div>
 
@@ -675,7 +635,7 @@
         </section>
 
         <!-- ======================================================
-             RODAPÉ + TOAST
+             RODAPÉ
         ======================================================= -->
         <footer class="footer">
 
@@ -695,6 +655,7 @@
                                 rel="noopener noreferrer">
 
                                 <img
+                                    id="footerLogoAseEsmeralda"
                                     class="footer-logo"
                                     src="img/brasao1.png"
                                     alt="Brasão do Igbá Àṣẹ Iyá Aféfé Igbin Lórun">
@@ -709,6 +670,7 @@
                                 rel="noopener noreferrer">
 
                                 <img
+                                    id="footerLogoAseTopazio"
                                     class="footer-logo"
                                     src="img/brasao2.png"
                                     alt="Brasão do Ilé Àṣẹ Iyá Ypondá">
@@ -750,9 +712,8 @@
     </main>
 
     <!-- ==========================================================
-         TOAST
-    =========================================================== -->
-
+        TOAST
+    ========================================================== -->
     <div
         id="toast"
         class="toast"
@@ -762,7 +723,8 @@
 
         <div class="toast-header">
 
-            <strong id="toastTitle">
+            <strong
+                id="toastTitle">
 
                 Aviso
 
@@ -784,6 +746,8 @@
             id="toastMessage"
             class="toast-body">
 
+            --
+
         </div>
 
     </div>
@@ -792,6 +756,10 @@
          JAVASCRIPT
     =========================================================== -->
 
+    <!-- Dados do Evento -->
+    <script src="js/dados-evento.js"></script>
+
+    <!-- Aplicação -->
     <script src="js/script.js"></script>
 
 </body>

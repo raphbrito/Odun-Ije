@@ -227,7 +227,10 @@ const Exports = (() => {
         buildOfficialTable(document, confirmedGuests);
 
         document.save(
-            `${generateFilename(CONFIG.exportTypes.official)}.pdf`
+            `${generateFilename(
+                context.event,
+                CONFIG.exportTypes.official
+            )}.pdf`
         );
 
     }
@@ -256,10 +259,17 @@ const Exports = (() => {
         buildReceptionTable(document, confirmedGuests);
 
         document.save(
-            `${generateFilename(CONFIG.exportTypes.reception)}.pdf`
+            `${generateFilename(
+                context.event,
+                CONFIG.exportTypes.reception
+            )}.pdf`
         );
 
     }
+
+    // ============================================================
+    // Início do Cabeçalho da Lista Oficial
+    // ============================================================
 
     /**
      * Monta o cabeçalho da Lista Oficial.
@@ -269,7 +279,120 @@ const Exports = (() => {
      */
     function buildOfficialHeader(document, context) {
 
+        const event = context.event;
+
+        const left = CONFIG.pdf.margin;
+
+        let top = CONFIG.pdf.margin;
+
+        document.setFont("helvetica", "normal");
+
+        document.setFontSize(8);
+
+        document.setTextColor(110);
+
+        document.text(
+            "Documento gerado automaticamente pelo sistema Eventos de Axé © 2026.",
+            left,
+            top
+        );
+
+        top += 10;
+
+        document.setFont("helvetica", "bold");
+
+        document.setFontSize(18);
+
+        document.setTextColor(40);
+
+        document.text(
+            "[Logo do evento]",
+            left,
+            top
+        );
+
+        top += 10;
+
+        document.setFontSize(16);
+
+        document.text(
+            "Painel Administrativo",
+            left,
+            top
+        );
+
+        top += 12;
+
+        document.setFont("helvetica", "bold");
+
+        document.setFontSize(10);
+
+        document.text(
+            "Evento:",
+            left,
+            top
+        );
+
+        document.setFont("helvetica", "normal");
+
+        document.text(
+            String(event.nome),
+            left + 22,
+            top
+        );
+
+        top += 8;
+
+        document.setFont("helvetica", "bold");
+
+        document.text(
+            "Data do evento:",
+            left,
+            top
+        );
+
+        document.setFont("helvetica", "normal");
+
+        document.text(
+            `${event.data} às ${event.horario}`,
+            left + 32,
+            top
+        );
+
+        top += 8;
+
+        document.setFont("helvetica", "bold");
+
+        document.text(
+            "Documento gerado em:",
+            left,
+            top
+        );
+
+        document.setFont("helvetica", "normal");
+
+        document.text(
+            context.generatedAt.toLocaleString("pt-BR"),
+            left + 45,
+            top
+        );
+
+        top += 8;
+
+        document.setDrawColor(180);
+
+        document.line(
+            left,
+            top,
+            210 - left,
+            top
+        );
+
     }
+
+    // ============================================================
+    // Fim do Cabeçalho da Lista Oficial
+    // ============================================================
 
     /**
      * Monta o resumo da Lista Oficial.
@@ -279,7 +402,86 @@ const Exports = (() => {
      */
     function buildOfficialSummary(document, summary) {
 
+        const left = CONFIG.pdf.margin;
+
+        let top = 73;
+
+        document.setFont("helvetica", "bold");
+
+        document.setFontSize(12);
+
+        document.setTextColor(40);
+
+        document.text(
+            "Resumo",
+            left,
+            top
+        );
+
+        top += 8;
+
+        document.setFont("helvetica", "normal");
+
+        document.setFontSize(10);
+
+        document.text(
+            `Respostas recebidas: ${summary.totalResponses}`,
+            left,
+            top
+        );
+
+        top += 7;
+
+        document.text(
+            `Total de Confirmados: ${summary.totalConfirmed}`,
+            left,
+            top
+        );
+
+        top += 7;
+
+        document.text(
+            `Total de recusas: ${summary.totalResponses - summary.totalConfirmed}`,
+            left,
+            top
+        );
+
+        top += 7;
+
+        document.text(
+            `Total de acompanhantes: ${summary.totalCompanions}`,
+            left,
+            top
+        );
+
+        top += 7;
+
+        document.text(
+            `Total de pessoas esperadas: ${summary.totalExpected}`,
+            left,
+            top
+        );
+
+        top += 8;
+
+        document.setDrawColor(180);
+
+        document.line(
+            left,
+            top,
+            210 - left,
+            top
+        );
+
     }
+
+    // ============================================================
+    // Fim do Resumo da Lista Oficial
+    // ============================================================
+
+    // ============================================================
+    // Início da Tabela da Lista Oficial
+    // ============================================================
 
     /**
      * Monta a tabela da Lista Oficial.
@@ -289,7 +491,111 @@ const Exports = (() => {
      */
     function buildOfficialTable(document, guests) {
 
+        const body = guests.map((guest) => {
+
+            return [
+
+                guest.nome,
+
+                "Confirmado",
+
+                Number(guest.acompanhantes || 0),
+
+                guest.dataResposta
+                    ? formatDate(guest.dataResposta)
+                    : ""
+
+            ];
+
+        });
+
+        document.autoTable({
+
+            startY: 118,
+
+            head: [[
+
+                "Convidado",
+
+                "Status",
+
+                "Acompanhantes",
+
+                "Respondido em"
+
+            ]],
+
+            body,
+
+            theme: "grid",
+
+            styles: {
+
+                font: "helvetica",
+
+                fontSize: 9,
+
+                cellPadding: 2,
+
+                valign: "middle"
+
+            },
+
+            headStyles: {
+
+                fillColor: [40, 40, 40],
+
+                textColor: 255,
+
+                fontStyle: "bold"
+
+            },
+
+            columnStyles: {
+
+                0: {
+
+                    cellWidth: 85
+
+                },
+
+                1: {
+
+                    halign: "center",
+
+                    cellWidth: 32
+
+                },
+
+                2: {
+
+                    halign: "center",
+
+                    cellWidth: 32
+
+                },
+
+                3: {
+
+                    halign: "center",
+
+                    cellWidth: 40
+
+                }
+
+            }
+
+        });
+
     }
+
+    // ============================================================
+    // Fim da Tabela da Lista Oficial
+    // ============================================================
+
+    // ============================================================
+    // Início do Cabeçalho da Lista de Recepção
+    // ============================================================
 
     /**
      * Monta o cabeçalho da Lista de Recepção.
@@ -299,7 +605,179 @@ const Exports = (() => {
      */
     function buildReceptionHeader(document, context) {
 
+        const event = context.event;
+
+        const summary = getSummary(context);
+
+        const left = CONFIG.pdf.margin;
+
+        let top = CONFIG.pdf.margin;
+
+        document.setFont("helvetica", "normal");
+
+        document.setFontSize(8);
+
+        document.setTextColor(110);
+
+        document.text(
+            "Documento gerado automaticamente pelo sistema Eventos de Axé © 2026.",
+            left,
+            top
+        );
+
+        top += 10;
+
+        document.setFont("helvetica", "bold");
+
+        document.setFontSize(18);
+
+        document.setTextColor(40);
+
+        document.text(
+            "[Logo do evento]",
+            left,
+            top
+        );
+
+        top += 10;
+
+        document.setFontSize(16);
+
+        document.text(
+            "Lista de Recepção",
+            left,
+            top
+        );
+
+        top += 12;
+
+        document.setFont("helvetica", "bold");
+
+        document.setFontSize(10);
+
+        document.text(
+            "Evento:",
+            left,
+            top
+        );
+
+        document.setFont("helvetica", "normal");
+
+        document.text(
+            String(event.nome),
+            left + 22,
+            top
+        );
+
+        top += 8;
+
+        document.setFont("helvetica", "bold");
+
+        document.text(
+            "Data do evento:",
+            left,
+            top
+        );
+
+        document.setFont("helvetica", "normal");
+
+        document.text(
+            `${event.data} às ${event.horario}`,
+            left + 32,
+            top
+        );
+
+        top += 8;
+
+        document.setFont("helvetica", "bold");
+
+        document.text(
+            "Documento gerado em:",
+            left,
+            top
+        );
+
+        document.setFont("helvetica", "normal");
+
+        document.text(
+            context.generatedAt.toLocaleString("pt-BR"),
+            left + 45,
+            top
+        );
+
+        top += 8;
+
+        document.setDrawColor(180);
+
+        document.line(
+            left,
+            top,
+            210 - left,
+            top
+        );
+
+        top += 8;
+
+        document.setFont("helvetica", "bold");
+
+        document.setFontSize(12);
+
+        document.setTextColor(40);
+
+        document.text(
+            "Resumo",
+            left,
+            top
+        );
+
+        top += 8;
+
+        document.setFont("helvetica", "normal");
+
+        document.setFontSize(10);
+
+        document.text(
+            `Total de convidados: ${summary.totalConfirmed}`,
+            left,
+            top
+        );
+
+        top += 7;
+
+        document.text(
+            `Total de acompanhantes: ${summary.totalCompanions}`,
+            left,
+            top
+        );
+
+        top += 7;
+
+        document.text(
+            `Total de pessoas esperadas: ${summary.totalExpected}`,
+            left,
+            top
+        );
+
+        top += 8;
+
+        document.setDrawColor(180);
+
+        document.line(
+            left,
+            top,
+            210 - left,
+            top
+        );
+
     }
+
+    // ============================================================
+    // Fim do Cabeçalho da Lista de Recepção
+    // ============================================================
+
+    // ============================================================
+    // Início da Tabela da Lista de Recepção
+    // ============================================================
 
     /**
      * Monta a tabela da Lista de Recepção.
@@ -309,8 +787,94 @@ const Exports = (() => {
      */
     function buildReceptionTable(document, guests) {
 
+        const body = guests.map((guest) => {
+
+            return [
+
+                guest.nome,
+
+                Number(guest.acompanhantes || 0),
+
+                ""
+
+            ];
+
+        });
+
+        document.autoTable({
+
+            startY: 110,
+
+            head: [[
+
+                "Convidado",
+
+                "Acompanhantes",
+
+                "Check-in"
+
+            ]],
+
+            body,
+
+            theme: "grid",
+
+            styles: {
+
+                font: "helvetica",
+
+                fontSize: 9,
+
+                cellPadding: 3,
+
+                valign: "middle"
+
+            },
+
+            headStyles: {
+
+                fillColor: [40, 40, 40],
+
+                textColor: 255,
+
+                fontStyle: "bold"
+
+            },
+
+            columnStyles: {
+
+                0: {
+
+                    cellWidth: 115
+
+                },
+
+                1: {
+
+                    halign: "center",
+
+                    cellWidth: 30
+
+                },
+
+                2: {
+
+                    halign: "center",
+
+                    cellWidth: 40
+
+                }
+
+            }
+
+        });
+
     }
 
+    // ============================================================
+    // Fim da Tabela da Lista de Recepção
+    // ============================================================
+    
     // ============================================================
     // Fim da Construção dos PDFs
     // ============================================================
@@ -338,7 +902,10 @@ const Exports = (() => {
 
         XLSX.writeFile(
             workbook,
-            `${generateFilename(CONFIG.exportTypes.excel)}.xlsx`
+            `${generateFilename(
+                context.event,
+                CONFIG.exportTypes.excel
+            )}.xlsx`
         );
 
     }
@@ -386,10 +953,11 @@ const Exports = (() => {
     /**
      * Gera o nome do arquivo utilizando o evento e a data atual.
      *
+     * @param {Object} event Dados do evento.
      * @param {String} exportType Tipo da exportação.
      * @returns {String}
      */
-    function generateFilename(exportType) {
+    function generateFilename(event, exportType) {
 
         const today = new Date();
 
@@ -403,7 +971,7 @@ const Exports = (() => {
             today.getDate()
         ).padStart(2, "0");
 
-        return `${EVENTO.slug}-${exportType}-${year}-${month}-${day}`;
+        return `${event.slug}-${exportType}-${year}-${month}-${day}`;
 
     }
 
@@ -429,7 +997,7 @@ const Exports = (() => {
     // API Pública
     // ============================================================
 
-    return {
+        return {
 
         init,
 

@@ -6,26 +6,6 @@
 
 const config = {
 
-    event: {
-
-        date: "2026-11-21T17:00:00",
-
-        location: "Igbá Àṣẹ Iyá Aféfé Igbin Lórun - Àṣẹ Esmeralda",
-
-        address: "Rua Mariana do Rosário, 109 - Vila Recreio - Magé - RJ - 25900-970"
-
-    },
-
-    urls: {
-
-        rsvp: "https://forms.gle/7nrGWsSwQBR8tsn18",
-
-        googleMaps: "https://www.google.com/maps/dir//R.+Mariana+do+Ros%C3%A1rio,+109+-+Vila+Recreio,+Mag%C3%A9+-+RJ,+25900-970/@-22.7749,-43.2914,17z/data=!4m18!1m8!3m7!1s0x990ad239448339:0x56e548d8d0f97534!2sR.+Mariana+do+Ros%C3%A1rio,+109+-+Vila+Recreio,+Mag%C3%A9+-+RJ,+25900-970!3b1!8m2!3d-22.6450252!4d-43.2053367!16s%2Fg%2F11x64xg80t!4m8!1m0!1m5!1m1!1s0x990ad239448339:0x56e548d8d0f97534!2m2!1d-43.2053367!2d-22.6450252!3e0!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDcyMi4wIKXMDSoASAFQAw%3D%3D",
-
-        waze: "https://waze.com/ul/h75cr0vdgj"
-
-    },
-
     toast: {
 
         duration: 5000
@@ -33,6 +13,12 @@ const config = {
     }
 
 };
+
+/* ==========================================================
+   DADOS DO EVENTO
+========================================================== */
+
+const event = EVENTO;
 
 /* ==========================================================
    DOM
@@ -52,7 +38,7 @@ const dom = {
 
     },
 
-    event: {
+    eventInfo: {
 
         date: document.getElementById("eventDate"),
 
@@ -95,6 +81,253 @@ const dom = {
 };
 
 /* ==========================================================
+   UTILITÁRIOS
+========================================================== */
+
+const DateUtils = (() => {
+
+    "use strict";
+
+    /* ==========================================================
+       CONSTANTES
+    ========================================================== */
+
+    const BRAZILIAN_DATE_PATTERN =
+        /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2}|\d{4})$/;
+
+    const ISO_DATE_PATTERN =
+        /^\d{4}-\d{2}-\d{2}(T.*)?$/;
+
+    /* ==========================================================
+       PARSER
+    ========================================================== */
+
+    function parse(value) {
+
+        if (value instanceof Date) {
+
+            return new Date(value.getTime());
+
+        }
+
+        if (
+            typeof value === "number" &&
+            Number.isFinite(value)
+        ) {
+
+            const date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+
+                throw new Error(
+                    `Data inválida: ${value}`
+                );
+
+            }
+
+            return date;
+
+        }
+
+        if (typeof value !== "string") {
+
+            throw new Error(
+                `Tipo de data não suportado: ${typeof value}`
+            );
+
+        }
+
+        const input = value.trim();
+
+        if (!input) {
+
+            throw new Error(
+                "A data informada está vazia."
+            );
+
+        }
+
+        if (ISO_DATE_PATTERN.test(input)) {
+
+            const date = new Date(input);
+
+            if (Number.isNaN(date.getTime())) {
+
+                throw new Error(
+                    `Data ISO inválida: "${value}".`
+                );
+
+            }
+
+            return date;
+
+        }
+
+        const brazilianMatch =
+            input.match(BRAZILIAN_DATE_PATTERN);
+
+        if (brazilianMatch) {
+
+            let [
+                ,
+                day,
+                month,
+                year
+            ] = brazilianMatch;
+
+            day = Number(day);
+            month = Number(month);
+
+            if (year.length === 2) {
+
+                year = Number(`20${year}`);
+
+            } else {
+
+                year = Number(year);
+
+            }
+
+            const date = new Date(
+                year,
+                month - 1,
+                day
+            );
+
+            if (
+
+                date.getFullYear() !== year ||
+
+                date.getMonth() !== (month - 1) ||
+
+                date.getDate() !== day
+
+            ) {
+
+                throw new Error(
+                    `Data inválida: "${value}".`
+                );
+
+            }
+
+            return date;
+
+        }
+
+        throw new Error(
+            `Formato de data não suportado: "${value}".`
+        );
+
+    }
+
+    /* ==========================================================
+       VALIDAÇÃO
+    ========================================================== */
+
+    function isValid(value) {
+
+        try {
+
+            parse(value);
+
+            return true;
+
+        } catch {
+
+            return false;
+
+        }
+
+    }
+
+    /* ==========================================================
+       FORMATAÇÃO
+    ========================================================== */
+
+    function short(value) {
+
+        return parse(value).toLocaleDateString(
+            "pt-BR",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
+        );
+
+    }
+
+    function long(value) {
+
+        return parse(value).toLocaleDateString(
+            "pt-BR",
+            {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+    }
+
+    function time(value) {
+
+        return parse(value).toLocaleTimeString(
+            "pt-BR",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+    }
+
+    function dateTime(value) {
+
+        return `${short(value)} às ${time(value)}`;
+
+    }
+
+    function iso(value) {
+
+        return parse(value).toISOString();
+
+    }
+
+    function rfc(value) {
+
+        return parse(value).toUTCString();
+
+    }
+
+    /* ==========================================================
+       API PÚBLICA
+    ========================================================== */
+
+    return {
+
+        parse,
+
+        isValid,
+
+        short,
+
+        long,
+
+        time,
+
+        dateTime,
+
+        iso,
+
+        rfc
+
+    };
+
+})();
+
+/* ==========================================================
    ESTADO DA APLICAÇÃO
 ========================================================== */
 
@@ -124,55 +357,23 @@ document.addEventListener(
 
 function initializeEventInformation() {
 
-    const eventDate = new Date(
+    dom.eventInfo.date.textContent =
 
-        config.event.date
-
-    );
-
-    dom.event.date.textContent =
-
-        eventDate.toLocaleDateString(
-
-            "pt-BR",
-
-            {
-
-                weekday: "long",
-
-                day: "2-digit",
-
-                month: "long",
-
-                year: "numeric"
-
-            }
-
+        DateUtils.long(
+            event.data
         );
 
-    dom.event.time.textContent =
+    dom.eventInfo.time.textContent =
 
-        eventDate.toLocaleTimeString(
+        event.horario;
 
-            "pt-BR",
+    dom.eventInfo.location.textContent =
 
-            {
+        event.local;
 
-                hour: "2-digit",
+    dom.eventInfo.address.textContent =
 
-                minute: "2-digit"
-
-            }
-
-        );
-
-    dom.event.location.textContent =
-
-        config.event.location;
-
-    dom.event.address.textContent =
-
-        config.event.address;
+        `${event.endereco} - ${event.bairro} - ${event.cidade} - ${event.estado} - ${event.cep}`;
 
 }
 
@@ -226,9 +427,9 @@ function getRemainingTime() {
 
     const now = new Date();
 
-    const eventDate = new Date(
+    const eventDate = DateUtils.parse(
 
-        config.event.date
+        `${event.data} ${event.horario}`
 
     );
 
@@ -389,6 +590,96 @@ function initializeButtons() {
         );
 
     }
+
+}
+
+/* ==========================================================
+   RSVP
+========================================================== */
+
+function openRsvp() {
+
+    if (!event.rsvp) {
+
+        showToast(
+
+            "Em breve",
+
+            "O formulário de confirmação ainda não foi disponibilizado.",
+
+            "warning"
+
+        );
+
+        return;
+
+    }
+
+    openExternalLink(
+
+        event.rsvp
+
+    );
+
+}
+
+/* ==========================================================
+   GOOGLE MAPS
+========================================================== */
+
+function openGoogleMaps() {
+
+    if (!event.googleMaps) {
+
+        showToast(
+
+            "Localização indisponível",
+
+            "O link do Google Maps ainda não foi configurado.",
+
+            "warning"
+
+        );
+
+        return;
+
+    }
+
+    openExternalLink(
+
+        event.googleMaps
+
+    );
+
+}
+
+/* ==========================================================
+   WAZE
+========================================================== */
+
+function openWaze() {
+
+    if (!event.waze) {
+
+        showToast(
+
+            "Localização indisponível",
+
+            "O link do Waze ainda não foi configurado.",
+
+            "warning"
+
+        );
+
+        return;
+
+    }
+
+    openExternalLink(
+
+        event.waze
+
+    );
 
 }
 
@@ -570,7 +861,7 @@ function showToast(title, message, type = "success") {
 
         hideToast,
 
-        config.app.toastDuration
+        config.toast.duration
 
     );
 
