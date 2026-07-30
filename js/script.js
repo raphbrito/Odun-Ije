@@ -15,6 +15,32 @@ const config = {
 };
 
 /* ==========================================================
+   DADOS DO SISTEMA
+========================================================== */
+
+const system = {
+
+    name: "Eventos de Axé",
+
+    description:
+        "Plataforma para gerenciamento de convites, RSVP e eventos de comunidades de matriz africana.",
+
+    developer: {
+
+        name: "Rafael Brito",
+
+        github: "https://github.com/raphbrito",
+
+        repository: "https://github.com/raphbrito/Eventos-de-Axe"
+
+    },
+
+    version: "1.0.0"
+
+};
+
+
+/* ==========================================================
    DADOS DO EVENTO
 ========================================================== */
 
@@ -76,7 +102,21 @@ const dom = {
 
         currentYear: document.getElementById("currentYear")
 
-    }
+    },
+
+    system: {
+
+        name: document.getElementById("systemName"),
+
+        description: document.getElementById("systemDescription"),
+
+        developer: document.getElementById("systemDeveloper"),
+
+        github: document.getElementById("systemGithub"),
+
+        repository: document.getElementById("systemRepository")
+
+    },
 
 };
 
@@ -547,6 +587,30 @@ function initializeFooter() {
 
         new Date().getFullYear();
 
+    dom.system.name.textContent =
+
+        system.name;
+
+    dom.system.description.textContent =
+
+        system.description;
+
+    dom.system.developer.textContent =
+
+        system.developer.name;
+
+    dom.system.developer.href =
+
+        system.developer.github;
+
+    dom.system.github.href =
+
+        system.developer.github;
+
+    dom.system.repository.href =
+
+        system.developer.repository;
+
 }
 
 /* ==========================================================
@@ -678,96 +742,6 @@ function openWaze() {
     openExternalLink(
 
         event.waze
-
-    );
-
-}
-
-/* ==========================================================
-   RSVP
-========================================================== */
-
-function openRsvp() {
-
-    if (!config.urls.rsvp) {
-
-        showToast(
-
-            "Em breve",
-
-            "O formulário de confirmação ainda não foi disponibilizado.",
-
-            "warning"
-
-        );
-
-        return;
-
-    }
-
-    openExternalLink(
-
-        config.urls.rsvp
-
-    );
-
-}
-
-/* ==========================================================
-   GOOGLE MAPS
-========================================================== */
-
-function openGoogleMaps() {
-
-    if (!config.urls.googleMaps) {
-
-        showToast(
-
-            "Localização indisponível",
-
-            "O link do Google Maps ainda não foi configurado.",
-
-            "warning"
-
-        );
-
-        return;
-
-    }
-
-    openExternalLink(
-
-        config.urls.googleMaps
-
-    );
-
-}
-
-/* ==========================================================
-   WAZE
-========================================================== */
-
-function openWaze() {
-
-    if (!config.urls.waze) {
-
-        showToast(
-
-            "Localização indisponível",
-
-            "O link do Waze ainda não foi configurado.",
-
-            "warning"
-
-        );
-
-        return;
-
-    }
-
-    openExternalLink(
-
-        config.urls.waze
 
     );
 
