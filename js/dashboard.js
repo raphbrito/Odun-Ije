@@ -5,59 +5,38 @@
 const elements = {
 
     /* Login */
-
     login: document.getElementById("login"),
-
     loginForm: document.getElementById("loginForm"),
-
     username: document.getElementById("username"),
-
     password: document.getElementById("password"),
 
     /* Dashboard */
-
     dashboard: document.getElementById("dashboard"),
-
     logoutButton: document.getElementById("logoutButton"),
 
     /* Estatísticas */
-
     totalRsvp: document.getElementById("totalRsvp"),
-
     totalConfirmed: document.getElementById("totalConfirmed"),
-
     totalCompanions: document.getElementById("totalCompanions"),
-
     totalPeople: document.getElementById("totalPeople"),
-
     totalAbsent: document.getElementById("totalAbsent"),
-
     confirmationRate: document.getElementById("confirmationRate"),
-
     averageCompanions: document.getElementById("averageCompanions"),
-
     lastResponse: document.getElementById("lastResponse"),
-
     lastUpdate: document.getElementById("statsLastUpdate"),
 
     /* Lista de convidados */
-
     guestTableHeader: document.getElementById("guestTableHeader"),
-
     guestTableBody: document.getElementById("guestTableBody"),
-
     exportPdf: document.getElementById("exportPdf"),
-
+    exportReceptionPdf: document.getElementById("exportReceptionPdf"),
     exportExcel: document.getElementById("exportExcel"),
 
     /* Toast */
-
     toast: document.getElementById("toast"),
-
     toastMessage: document.getElementById("toastMessage"),
 
     /* Utilidades */
-
     currentYear: document.getElementById("currentYear")
 
 };
@@ -66,48 +45,21 @@ const elements = {
 /* CONFIGURAÇÃO */
 /* ================================================== */
 
-const config = {
-
-    api: {
-
-        url: "https://script.google.com/macros/s/AKfycbwPJ9a8noNHjAd5XqBkvjqqO7_ZSVZbx8sRPpxUjcDwjO-XgAtTuqutwSWPOr5q82tCnA/exec"
-
-    },
-
-    layout: {
-
-        mobileBreakpoint: 768,
-
-        resizeDebounce: 150
-
-    },
-
-    toast: {
-
-        duration: 3000
-
-    }
-
+const CONFIG = {
+    API_URL:
+        "https://script.google.com/macros/s/AKfycbwPJ9a8noNHjAd5XqBkvjqqO7_ZSVZbx8sRPpxUjcDwjO-XgAtTuqutwSWPOr5q82tCnA/exec",
+    MOBILE_BREAKPOINT: 768,
+    TOAST_DURATION: 3000,
+    RESIZE_DEBOUNCE: 150
 };
-
-/* ================================================== */
-/* DADOS DO EVENTO */
-/* ================================================== */
-
-const event = EVENTO;
 
 /* ================================================== */
 /* ESTADO DA APLICAÇÃO */
 /* ================================================== */
 
 const state = {
-
     authenticated: false,
-
-    dashboard: null,
-
-    toastTimer: null
-
+    dashboard: null
 };
 
 /* ================================================== */
@@ -115,63 +67,28 @@ const state = {
 /* ================================================== */
 
 async function request(params = {}) {
-
-    const url = new URL(
-
-        config.api.url
-
-    );
-
-    Object.entries(params).forEach(
-
-        ([key, value]) => {
-
-            if (value !== undefined && value !== null) {
-
-                url.searchParams.append(
-
-                    key,
-
-                    value
-
-                );
-
-            }
-
+    const url = new URL(CONFIG.API_URL);
+    Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+            url.searchParams.append(
+                key,
+                value
+            );
         }
-
-    );
-
-    const response = await fetch(
-
-        url
-
-    );
-
-    if (!response.ok) {
-
-        throw new Error(
-
-            "Não foi possível conectar ao servidor."
-
-        );
-
-    }
-
-    return await response.json();
-
-}
-
-async function fetchDashboardData(username, password) {
-
-    return await request({
-
-        usuario: username,
-
-        senha: password
-
     });
-
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(
+            "Não foi possível conectar ao servidor."
+        );
+    }
+    return await response.json();
+}
+async function fetchDashboardData(username, password) {
+    return await request({
+        usuario: username,
+        senha: password
+    });
 }
 
 /* ================================================== */
@@ -246,7 +163,7 @@ function showDashboard() {
     elements.login.hidden = true;
     elements.dashboard.hidden = false;
     updateStatistics();
-    renderGuestsTable();
+    updateGuestsTable();
     updateLastUpdate();
 }
 function showLogin() {
@@ -299,7 +216,7 @@ function updateLastUpdate() {
 /* TABELA */
 /* ================================================== */
 
-function renderGuestsTable() {
+function updateGuestsTable() {
     const convidados =
         state.dashboard?.convidados ?? [];
     const mobile =
@@ -455,57 +372,30 @@ function formatResponseDate(dataResposta) {
 /* TOAST */
 /* ================================================== */
 
+let toastTimeout = null;
 function showToast(
     message,
     type = "success"
 ) {
-
-    window.clearTimeout(
-
-        state.toastTimer
-
-    );
-
+    clearTimeout(toastTimeout);
     elements.toastMessage.textContent =
-
         message;
-
     elements.toast.className =
-
         `toast toast-${type}`;
-
     elements.toast.classList.add(
-
         "is-visible"
-
     );
-
-    state.toastTimer = window.setTimeout(
-
+    toastTimeout = setTimeout(
         hideToast,
-
-        config.toast.duration
-
+        CONFIG.TOAST_DURATION
     );
-
 }
-
 function hideToast() {
-
-    window.clearTimeout(
-
-        state.toastTimer
-
-    );
-
+    clearTimeout(toastTimeout);
     elements.toast.classList.remove(
-
         "is-visible"
-
     );
-
-    state.toastTimer = null;
-
+    toastTimeout = null;
 }
 
 /* ================================================== */
@@ -513,45 +403,23 @@ function hideToast() {
 /* ================================================== */
 
 function isMobileLayout() {
-
     return (
-
         window.innerWidth <=
-
-        config.layout.mobileBreakpoint
-
+        CONFIG.MOBILE_BREAKPOINT
     );
-
 }
-
 function debounce(
-
     callback,
-
-    delay = config.layout.resizeDebounce
-
+    delay = CONFIG.RESIZE_DEBOUNCE
 ) {
-
     let timeout;
-
     return (...args) => {
-
-        window.clearTimeout(
-
-            timeout
-
-        );
-
-        timeout = window.setTimeout(
-
+        clearTimeout(timeout);
+        timeout = setTimeout(
             () => callback(...args),
-
             delay
-
         );
-
     };
-
 }
 
 /* ================================================== */
@@ -571,6 +439,10 @@ function registerEvents() {
         "click",
         handleExportPdf
     );
+    elements.exportReceptionPdf.addEventListener(
+        "click",
+        handleExportReceptionPdf
+    );
     elements.exportExcel.addEventListener(
         "click",
         handleExportExcel
@@ -586,41 +458,11 @@ function registerEvents() {
 /* ================================================== */
 
 function createExportContext() {
-
     return {
-
-        event: {
-
-            name: event.nomeEvento,
-
-            date: DateUtils.long(
-
-                event.data
-
-            ),
-
-            time: event.horario,
-
-            location: event.local,
-
-            address: event.endereco,
-
-            city: `${event.cidade}/${event.estado}`
-
-        },
-
+        event: EVENTO,
         guests: state.dashboard?.convidados ?? [],
-
-        generatedAt: new Date(),
-
-        generatedAtFormatted: DateUtils.dateTime(
-
-            new Date()
-
-        )
-
+        generatedAt: new Date()
     };
-
 }
 
 /* ================================================== */
@@ -641,7 +483,7 @@ function handleResize() {
     ) {
         return;
     }
-    renderGuestsTable();
+    updateGuestsTable();
 }
 function handleExportPdf() {
     if (!state.dashboard) {
@@ -651,10 +493,32 @@ function handleExportPdf() {
         );
         return;
     }
+    try {
+        const context = createExportContext();
+        Exports.exportOfficialPdf(context);
+        showToast(
+            "PDF gerado com sucesso."
+        );
+    } catch (error) {
+        console.error("Falha ao gerar o PDF oficial:", error);
+        showToast(
+            "Não foi possível gerar o PDF oficial.",
+            "error"
+        );
+    }
+}
+function handleExportReceptionPdf() {
+    if (!state.dashboard) {
+        showToast(
+            "Nenhum dado disponível para exportação.",
+            "error"
+        );
+        return;
+    }
     const context = createExportContext();
-    Exports.exportOfficialPdf(context);
+    Exports.exportReceptionPdf(context);
     showToast(
-        "PDF gerado com sucesso."
+        "Lista de recepção gerada com sucesso."
     );
 }
 function handleExportExcel() {

@@ -1,659 +1,140 @@
 "use strict";
 
-/* ==========================================================
-   CONFIGURAÇÃO
-========================================================== */
-
 const config = {
-
-    toast: {
-
-        duration: 5000
-
-    }
-
+    toast: { duration: 5000 }
 };
-
-/* ==========================================================
-   DADOS DO SISTEMA
-========================================================== */
-
-const system = {
-
-    name: "Eventos de Axé",
-
-    description:
-        "Plataforma para gerenciamento de convites, RSVP e eventos de comunidades de matriz africana.",
-
-    developer: {
-
-        name: "Rafael Brito",
-
-        github: "https://github.com/raphbrito",
-
-        repository: "https://github.com/raphbrito/Eventos-de-Axe"
-
-    },
-
-    version: "1.0.0"
-
-};
-
-/* ==========================================================
-   DOM
-========================================================== */
 
 const dom = {
-
-    countdown: {
-
-        days: document.getElementById("days"),
-
-        hours: document.getElementById("hours"),
-
-        minutes: document.getElementById("minutes"),
-
-        seconds: document.getElementById("seconds")
-
-    },
-
+    countdown: ["days", "hours", "minutes", "seconds"].reduce((items, id) => {
+        items[id] = document.getElementById(id);
+        return items;
+    }, {}),
     event: {
-
         date: document.getElementById("eventDate"),
-
         time: document.getElementById("eventTime"),
-
         location: document.getElementById("eventLocation"),
-
         address: document.getElementById("eventAddress")
-
     },
-
     buttons: {
-
         rsvp: document.getElementById("btnRSVP"),
-
         googleMaps: document.getElementById("btnGoogleMaps"),
-
         waze: document.getElementById("btnWaze")
-
     },
-
     toast: {
-
         container: document.getElementById("toast"),
-
         title: document.getElementById("toastTitle"),
-
         message: document.getElementById("toastMessage"),
-
         close: document.getElementById("toastClose")
-
-    },
-
-    footer: {
-
-        currentYear: document.getElementById("currentYear")
-
     }
-    
-    };
-
-/* ==========================================================
-   ESTADO DA APLICAÇÃO
-========================================================== */
-
-const state = {
-
-    countdownTimer: null,
-
-    toastTimer: null
-
 };
 
-/* ==========================================================
-   INICIALIZAÇÃO
-========================================================== */
+const state = { countdownTimer: null, toastTimer: null };
 
-document.addEventListener(
+document.addEventListener("DOMContentLoaded", initialize);
 
-    "DOMContentLoaded",
-
-    initialize
-
-);
-
-/* ==========================================================
-   INFORMAÇÕES DO EVENTO
-========================================================== */
-
-function initializeEventInformation() {
-
-    const eventDate = new Date(
-
-        config.event.date
-
-    );
-
-    dom.event.date.textContent =
-
-        eventDate.toLocaleDateString(
-
-            "pt-BR",
-
-            {
-
-                weekday: "long",
-
-                day: "2-digit",
-
-                month: "long",
-
-                year: "numeric"
-
-            }
-
-        );
-
-    dom.event.time.textContent =
-
-        eventDate.toLocaleTimeString(
-
-            "pt-BR",
-
-            {
-
-                hour: "2-digit",
-
-                minute: "2-digit"
-
-            }
-
-        );
-
-    dom.event.location.textContent =
-
-        config.event.location;
-
-    dom.event.address.textContent =
-
-        config.event.address;
-
+function initialize() {
+    renderEvent();
+    initializeCountdown();
+    initializeButtons();
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+    dom.toast.close?.addEventListener("click", hideToast);
 }
 
-/* ==========================================================
-   CONTAGEM REGRESSIVA
-========================================================== */
+function eventDate() {
+    return new Date(`${EVENTO.data}T${EVENTO.horario}:00`);
+}
+
+function formatAddress() {
+    return [EVENTO.endereco, EVENTO.bairro, EVENTO.cidade, EVENTO.estado, EVENTO.cep]
+        .filter(Boolean)
+        .join(" - ");
+}
+
+function setText(id, value) {
+    const element = document.getElementById(id);
+    if (element && value) element.textContent = value;
+}
+
+function setImage(id, source, alt) {
+    const image = document.getElementById(id);
+    if (!image || !source) return;
+    image.src = source;
+    if (alt) image.alt = alt;
+}
+
+function renderEvent() {
+    const date = eventDate();
+    const visual = EVENTO.identidadeVisual ?? {};
+
+    document.title = EVENTO.tituloEvento;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", EVENTO.descricao);
+    document.querySelector('meta[property="og:title"]')?.setAttribute("content", EVENTO.tituloEvento);
+    document.querySelector('meta[property="og:description"]')?.setAttribute("content", EVENTO.descricao);
+    document.querySelector('meta[property="og:image"]')?.setAttribute("content", visual.imagemCompartilhamento || visual.convite || "");
+    document.querySelector('link[rel="icon"]')?.setAttribute("href", visual.favicon || visual.brasaoAseTopazio || "");
+    document.querySelector('link[rel="apple-touch-icon"]')?.setAttribute("href", visual.favicon || visual.brasaoAseTopazio || "");
+    if (visual.fundo) document.documentElement.style.setProperty("--event-background", `url("${visual.fundo}")`);
+
+    setText("heroSubtitle", EVENTO.subtituloHero);
+    setText("heroTitle", EVENTO.nomeEvento);
+    setText("heroCelebrant", EVENTO.celebrante);
+    setText("heroMessage", EVENTO.mensagemHero);
+    setText("rsvpMessage", EVENTO.rsvp?.descricao);
+    setText("directionsDescription", EVENTO.localizacao?.descricao);
+    setText("directionsMessage", EVENTO.localizacao?.mensagem);
+    dom.event.date.textContent = date.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
+    dom.event.time.textContent = date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+    dom.event.location.textContent = EVENTO.local;
+    dom.event.address.textContent = formatAddress();
+
+    setImage("heroLogo", visual.logo, `Logo do ${EVENTO.nomeEvento}`);
+    setImage("dashboardLogo", visual.brasaoAseTopazio, "Dashboard");
+    setImage("aseEsmeraldaLogo", visual.brasaoAseEsmeralda);
+    setImage("aseTopazioLogo", visual.brasaoAseTopazio);
+}
 
 function initializeCountdown() {
-
     updateCountdown();
-
-    state.countdownTimer = window.setInterval(
-
-        updateCountdown,
-
-        1000
-
-    );
-
+    state.countdownTimer = window.setInterval(updateCountdown, 1000);
 }
 
 function updateCountdown() {
-
-    const remainingTime = getRemainingTime();
-
-    renderCountdown(
-
-        remainingTime
-
-    );
-
-    if (!remainingTime.expired) {
-
-        return;
-
-    }
-
-    window.clearInterval(
-
-        state.countdownTimer
-
-    );
-
-}
-
-/* ==========================================================
-   CÁLCULO DO TEMPO
-========================================================== */
-
-function getRemainingTime() {
-
-    const now = new Date();
-
-    const eventDate = new Date(
-
-        config.event.date
-
-    );
-
-    const difference = eventDate - now;
-
-    if (difference <= 0) {
-
-        return {
-
-            expired: true,
-
-            days: 0,
-
-            hours: 0,
-
-            minutes: 0,
-
-            seconds: 0
-
-        };
-
-    }
-
-    const totalSeconds = Math.floor(
-
-        difference / 1000
-
-    );
-
-    return {
-
-        expired: false,
-
-        days: Math.floor(
-
-            totalSeconds / 86400
-
-        ),
-
-        hours: Math.floor(
-
-            (totalSeconds % 86400) / 3600
-
-        ),
-
-        minutes: Math.floor(
-
-            (totalSeconds % 3600) / 60
-
-        ),
-
-        seconds:
-
-            totalSeconds % 60
-
+    const totalSeconds = Math.max(0, Math.floor((eventDate() - new Date()) / 1000));
+    const time = {
+        days: Math.floor(totalSeconds / 86400),
+        hours: Math.floor((totalSeconds % 86400) / 3600),
+        minutes: Math.floor((totalSeconds % 3600) / 60),
+        seconds: totalSeconds % 60
     };
-
+    dom.countdown.days.textContent = time.days;
+    dom.countdown.hours.textContent = String(time.hours).padStart(2, "0");
+    dom.countdown.minutes.textContent = String(time.minutes).padStart(2, "0");
+    dom.countdown.seconds.textContent = String(time.seconds).padStart(2, "0");
+    if (totalSeconds === 0) window.clearInterval(state.countdownTimer);
 }
-
-/* ==========================================================
-   RENDERIZAÇÃO
-========================================================== */
-
-function renderCountdown(time) {
-
-    dom.countdown.days.textContent =
-
-        time.days;
-
-    dom.countdown.hours.textContent =
-
-        formatNumber(
-
-            time.hours
-
-        );
-
-    dom.countdown.minutes.textContent =
-
-        formatNumber(
-
-            time.minutes
-
-        );
-
-    dom.countdown.seconds.textContent =
-
-        formatNumber(
-
-            time.seconds
-
-        );
-
-}
-
-function formatNumber(value) {
-
-    return String(value).padStart(
-
-        2,
-
-        "0"
-
-    );
-
-}
-
-/* ==========================================================
-   RODAPÉ
-========================================================== */
-
-function initializeFooter() {
-
-    dom.footer.currentYear.textContent =
-
-        new Date().getFullYear();
-
-    dom.system.name.textContent =
-
-        system.name;
-
-    dom.system.description.textContent =
-
-        system.description;
-
-    dom.system.developer.textContent =
-
-        system.developer.name;
-
-    dom.system.developer.href =
-
-        system.developer.github;
-
-    dom.system.github.href =
-
-        system.developer.github;
-
-    dom.system.repository.href =
-
-        system.developer.repository;
-
-}
-
-/* ==========================================================
-   BOTÕES E NAVEGAÇÃO
-========================================================== */
 
 function initializeButtons() {
-
-    if (dom.buttons.rsvp) {
-
-        dom.buttons.rsvp.addEventListener(
-
-            "click",
-
-            openRsvp
-
-        );
-
-    }
-
-    if (dom.buttons.googleMaps) {
-
-        dom.buttons.googleMaps.addEventListener(
-
-            "click",
-
-            openGoogleMaps
-
-        );
-
-    }
-
-    if (dom.buttons.waze) {
-
-        dom.buttons.waze.addEventListener(
-
-            "click",
-
-            openWaze
-
-        );
-
-    }
-
+    dom.buttons.rsvp?.addEventListener("click", () => openLink(EVENTO.rsvp?.link, "Formulário indisponível", "O formulário de confirmação ainda não foi disponibilizado."));
+    dom.buttons.googleMaps?.addEventListener("click", () => openLink(EVENTO.localizacao?.googleMaps, "Localização indisponível", "O link do Google Maps ainda não foi configurado."));
+    dom.buttons.waze?.addEventListener("click", () => openLink(EVENTO.localizacao?.waze, "Localização indisponível", "O link do Waze ainda não foi configurado."));
 }
 
-/* ==========================================================
-   RSVP
-========================================================== */
-
-function openRsvp() {
-
-    if (!config.urls.rsvp) {
-
-        showToast(
-
-            "Em breve",
-
-            "O formulário de confirmação ainda não foi disponibilizado.",
-
-            "warning"
-
-        );
-
-        return;
-
-    }
-
-    openExternalLink(
-
-        config.urls.rsvp
-
-    );
-
-}
-
-/* ==========================================================
-   GOOGLE MAPS
-========================================================== */
-
-function openGoogleMaps() {
-
-    if (!config.urls.googleMaps) {
-
-        showToast(
-
-            "Localização indisponível",
-
-            "O link do Google Maps ainda não foi configurado.",
-
-            "warning"
-
-        );
-
-        return;
-
-    }
-
-    openExternalLink(
-
-        config.urls.googleMaps
-
-    );
-
-}
-
-/* ==========================================================
-   WAZE
-========================================================== */
-
-function openWaze() {
-
-    if (!config.urls.waze) {
-
-        showToast(
-
-            "Localização indisponível",
-
-            "O link do Waze ainda não foi configurado.",
-
-            "warning"
-
-        );
-
-        return;
-
-    }
-
-    openExternalLink(
-
-        config.urls.waze
-
-    );
-
-}
-
-/* ==========================================================
-   LINKS EXTERNOS
-========================================================== */
-
-function openExternalLink(url) {
-
-    window.open(
-
-        url,
-
-        "_blank",
-
-        "noopener,noreferrer"
-
-    );
-
-}
-
-/* ==========================================================
-   TOAST
-========================================================== */
-
-function initializeToast() {
-
-    if (!dom.toast.close) {
-
-        return;
-
-    }
-
-    dom.toast.close.addEventListener(
-
-        "click",
-
-        hideToast
-
-    );
-
+function openLink(url, title, message) {
+    if (!url) return showToast(title, message, "warning");
+    window.open(url, "_blank", "noopener,noreferrer");
 }
 
 function showToast(title, message, type = "success") {
-
-    const toast = dom.toast.container;
-
-    if (!toast) {
-
-        return;
-
-    }
-
-    window.clearTimeout(
-
-        state.toastTimer
-
-    );
-
-    toast.classList.remove(
-
-        "toast-success",
-        "toast-warning",
-        "toast-error"
-
-    );
-
-    toast.classList.add(
-
-        `toast-${type}`
-
-    );
-
-    dom.toast.title.textContent =
-
-        title;
-
-    dom.toast.message.textContent =
-
-        message;
-
-    toast.classList.add(
-
-        "is-visible"
-
-    );
-
-    state.toastTimer = window.setTimeout(
-
-        hideToast,
-
-        config.app.toastDuration
-
-    );
-
+    if (!dom.toast.container) return;
+    window.clearTimeout(state.toastTimer);
+    dom.toast.container.classList.remove("toast-success", "toast-warning", "toast-error");
+    dom.toast.container.classList.add(`toast-${type}`, "is-visible");
+    dom.toast.title.textContent = title;
+    dom.toast.message.textContent = message;
+    state.toastTimer = window.setTimeout(hideToast, config.toast.duration);
 }
 
 function hideToast() {
-
-    const toast = dom.toast.container;
-
-    if (!toast) {
-
-        return;
-
-    }
-
-    window.clearTimeout(
-
-        state.toastTimer
-
-    );
-
-    toast.classList.remove(
-
-        "is-visible"
-
-    );
-
-}
-
-/* ==========================================================
-   PÁGINA
-========================================================== */
-
-function initializePage() {
-
-    initializeCountdown();
-
-    initializeEventInformation();
-
-    initializeFooter();
-
-}
-
-/* ==========================================================
-   APLICAÇÃO
-========================================================== */
-
-function initialize() {
-
-    initializePage();
-
-    initializeButtons();
-
-    initializeToast();
-
-    initializeSystem();
+    window.clearTimeout(state.toastTimer);
+    dom.toast.container?.classList.remove("is-visible");
 }
