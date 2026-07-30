@@ -3,95 +3,52 @@
 
 <head>
 
-    <head>
-
-    <!-- ==========================================================
-         METADADOS
-    =========================================================== -->
+    <!-- ================================================== -->
+    <!-- META TAGS -->
+    <!-- ================================================== -->
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <!-- ================================================== -->
+    <!-- TÍTULO -->
+    <!-- ================================================== -->
 
-    <meta
-        name="theme-color"
-        content="#D4AF37">
+    <title>Painel Administrativo | Odún Ìjé</title>
 
-    <meta
-        name="description"
-        content="Painel administrativo do evento.">
+    <!-- ================================================== -->
+    <!-- FAVICON -->
+    <!-- ================================================== -->
 
-    <meta
-        name="author"
-        content="Eventos de Axé">
+    <link rel="icon" type="image/x-icon" href="img/favicon/logo-evento.ico">
 
-    <!-- ==========================================================
-         TÍTULO
-    =========================================================== -->
+    <!-- ================================================== -->
+    <!-- FONTES -->
+    <!-- ================================================== -->
 
-    <title>
-
-        Painel Administrativo | Odún Ìjé
-
-    </title>
-
-    <!-- ==========================================================
-         ÍCONES
-    =========================================================== -->
-
-    <link
-        id="favicon"
-        rel="icon"
-        type="image/x-icon"
-        href="img/favicon/logo-evento.ico">
-
-    <link
-        id="apple-touch-icon"
-        rel="apple-touch-icon"
-        href="img/favicon/logo-evento.ico">
-
-    <!-- ==========================================================
-         GOOGLE FONTS
-    =========================================================== -->
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- ==========================================================
-         CSS
-    =========================================================== -->
+    <!-- ================================================== -->
+    <!-- ESTILOS -->
+    <!-- ================================================== -->
 
-    <link
-        rel="stylesheet"
-        href="css/style.css">
-
-    <link
-        rel="stylesheet"
-        href="css/dashboard.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 
 </head>
 
 <body>
 
-    <!-- ==================================================
-        LOGIN
-    ================================================== -->
+    <!-- ================================================== -->
+    <!-- LOGIN -->
+    <!-- ================================================== -->
 
-    <main
-        id="login"
-        class="login page">
+    <main id="login" class="login page">
 
         <section class="section">
 
@@ -101,43 +58,29 @@
 
                     <div class="login-layout">
 
-                        <!-- ==================================================
-                            LOGO
-                        ================================================== -->
+                        <!-- Logo -->
 
                         <img
-                            id="loginLogo"
-                            class="login-logo"
                             src="img/logo-evento.png"
-                            alt="Logo do Evento">
+                            alt="Logo do Odún Ìjé"
+                            class="login-logo">
 
-                        <!-- ==================================================
-                            CONTEÚDO
-                        ================================================== -->
+                        <!-- Conteúdo -->
 
                         <div class="login-content">
 
-                            <h1
-                                id="loginTitle"
-                                class="section-title">
-
-                                --
-
+                            <h1 class="section-title">
+                                Acesso Administrativo
                             </h1>
 
-                            <p
-                                id="loginDescription"
-                                class="section-subtitle">
-
-                                --
-
+                            <p class="section-subtitle">
+                                Entre com suas credenciais para acessar o painel
+                                administrativo do RSVP do Odún Ìjé.
                             </p>
 
                         </div>
 
-                        <!-- ==================================================
-                            FORMULÁRIO
-                        ================================================== -->
+                        <!-- Formulário -->
 
                         <form
                             id="loginForm"
@@ -185,7 +128,6 @@
                             </div>
 
                             <button
-                                id="loginButton"
                                 type="submit"
                                 class="btn btn-primary">
 
@@ -204,6 +146,7 @@
         </section>
 
     </main>
+
 
     <!-- ================================================== -->
     <!-- DASHBOARD -->
@@ -226,27 +169,21 @@
 
                     <div class="dashboard-header-layout cluster">
 
-                        <!-- ==================================================
-                            LOGO
-                        ================================================== -->
+                        <!-- Logo -->
 
                         <a
-                            id="dashboardBrand"
                             href="index.html"
                             class="dashboard-brand"
                             aria-label="Voltar para o convite">
 
                             <img
-                                id="dashboardLogo"
-                                class="dashboard-logo"
                                 src="img/logo-evento.png"
-                                alt="Logo do Evento">
+                                alt="Logo do Odún Ìjé"
+                                class="dashboard-logo">
 
                         </a>
 
-                        <!-- ==================================================
-                            AÇÕES
-                        ================================================== -->
+                        <!-- Sair -->
 
                         <button
                             id="logoutButton"
@@ -276,28 +213,19 @@
 
                 <div class="stack">
 
-                    <!-- ==================================================
-                        CABEÇALHO
-                    ================================================== -->
+                    <!-- Cabeçalho da Seção -->
 
                     <header class="section-header dashboard-section-header">
 
                         <div class="dashboard-section-content stack">
 
-                            <h2
-                                id="guestSectionTitle"
-                                class="section-title">
-
-                                --
-
+                            <h2 class="section-title">
+                                Lista de Convidados
                             </h2>
 
-                            <p
-                                id="guestSectionDescription"
-                                class="section-subtitle">
-
-                                --
-
+                            <p class="section-subtitle">
+                                Relação completa dos convidados que responderam ao
+                                formulário de RSVP, organizada em ordem alfabética.
                             </p>
 
                         </div>
@@ -326,9 +254,7 @@
 
                     </header>
 
-                    <!-- ==================================================
-                        TABELA
-                    ================================================== -->
+                    <!-- Tabela -->
 
                     <div class="surface dashboard-table-wrapper">
 
@@ -374,253 +300,156 @@
         <!-- ================================================== -->
 
         <section class="dashboard-stats section">
-
             <div class="container">
-
                 <div class="stack">
 
-                    <!-- ==================================================
-                        CABEÇALHO
-                    ================================================== -->
-
                     <header class="section-header dashboard-section-header">
-
-                        <h2
-                            id="statisticsSectionTitle"
-                            class="section-title">
-
-                            --
-
+                        <h2 class="section-title">
+                            Estatísticas do Evento
                         </h2>
-
-                        <p
-                            id="statisticsSectionDescription"
-                            class="section-subtitle">
-
-                            --
-
+                        <p class="section-subtitle">
+                            Resumo geral das confirmações de presença do Odún Ìjé.
                         </p>
-
                     </header>
 
-                    <!-- ==================================================
-                        ESTATÍSTICAS PRINCIPAIS
-                    ================================================== -->
-
+                    <!-- Estatísticas Principais -->
                     <div class="grid cols-5 dashboard-stats-grid dashboard-stats-grid-primary">
 
+                        <!-- Respostas Recebidas -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Respostas Recebidas
-
                                 </span>
-
                                 <strong
                                     id="totalRsvp"
                                     class="stats-card-value">
-
                                     0
-
                                 </strong>
-
                             </div>
-
                         </article>
 
+                        <!-- Convidados Confirmados -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Convidados Confirmados
-
                                 </span>
-
                                 <strong
                                     id="totalConfirmed"
                                     class="stats-card-value">
-
                                     0
-
                                 </strong>
-
                             </div>
-
                         </article>
 
+                        <!-- Total de Acompanhantes -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Total de Acompanhantes
-
                                 </span>
-
                                 <strong
                                     id="totalCompanions"
                                     class="stats-card-value">
-
                                     0
-
                                 </strong>
-
                             </div>
-
                         </article>
 
+                        <!-- Total de Pessoas Presentes -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Total de Pessoas Presentes
-
                                 </span>
-
                                 <strong
                                     id="totalPeople"
                                     class="stats-card-value">
-
                                     0
-
                                 </strong>
-
                             </div>
-
                         </article>
 
+                        <!-- Total de Não Presentes -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Total de Não Presentes
-
                                 </span>
-
                                 <strong
                                     id="totalAbsent"
                                     class="stats-card-value">
-
                                     0
-
                                 </strong>
-
                             </div>
-
                         </article>
 
                     </div>
 
-                    <!-- ==================================================
-                        INDICADORES
-                    ================================================== -->
-
+                    <!-- Indicadores -->
                     <div class="grid cols-4 dashboard-stats-grid dashboard-stats-grid-secondary">
 
+                        <!-- Taxa de Confirmação -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Taxa de Confirmação
-
                                 </span>
-
                                 <strong
                                     id="confirmationRate"
                                     class="stats-card-value">
-
                                     0,00%
-
                                 </strong>
-
                             </div>
-
                         </article>
 
+                        <!-- Média de Acompanhantes -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Média de Acompanhantes
-
                                 </span>
-
                                 <strong
                                     id="averageCompanions"
                                     class="stats-card-value">
-
                                     0,00
-
                                 </strong>
-
                             </div>
-
                         </article>
 
+                        <!-- Última Resposta -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Última Resposta
-
                                 </span>
-
                                 <strong
                                     id="lastResponse"
                                     class="stats-card-value">
-
                                     --
-
                                 </strong>
-
                             </div>
-
                         </article>
 
+                        <!-- Última Atualização -->
                         <article class="surface stats-card">
-
                             <div class="stats-card-content">
-
                                 <span class="stats-card-label">
-
                                     Última Atualização
-
                                 </span>
-
                                 <strong
                                     id="statsLastUpdate"
                                     class="stats-card-value">
-
                                     --
-
                                 </strong>
-
                             </div>
-
                         </article>
 
                     </div>
 
                 </div>
-
             </div>
-
         </section>
 
         <!-- ================================================== -->
@@ -710,104 +539,6 @@
 
     </main>
 
-    <!-- ==================================================
-     FOOTER INSTITUCIONAL
-    ================================================== -->
-
-    <footer class="system-footer">
-
-        <div class="container">
-
-            <div class="system-footer-content stack">
-
-                <!-- ==================================================
-                    IDENTIDADE
-                ================================================== -->
-
-                <div class="system-footer-brand stack">
-
-                    <h2
-                        id="systemName"
-                        class="system-footer-title">
-
-                        --
-
-                    </h2>
-
-                    <p
-                        id="systemDescription"
-                        class="system-footer-description">
-
-                        --
-
-                    </p>
-
-                </div>
-
-                <!-- ==================================================
-                    DESENVOLVEDOR
-                ================================================== -->
-
-                <p class="system-footer-developer">
-
-                    Desenvolvido por
-
-                    <a
-                        id="systemInstagram"
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer">
-
-                        Rafael Brito
-
-                    </a>
-
-                </p>
-
-                <!-- ==================================================
-                    LINKS
-                ================================================== -->
-
-                <nav
-                    class="system-footer-links"
-                    aria-label="Links do projeto">
-
-                    <a
-                        id="systemGithub"
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer">
-
-                        GitHub
-
-                    </a>
-
-                    <span
-                        class="system-footer-separator"
-                        aria-hidden="true">
-
-                        •
-
-                    </span>
-
-                    <a
-                        id="systemRepository"
-                        href="#"
-                        target="_blank"
-                        rel="noopener noreferrer">
-
-                        Repositório
-
-                    </a>
-
-                </nav>
-
-            </div>
-
-        </div>
-
-    </footer>
-
     <!-- ================================================== -->
     <!-- TOAST -->
     <!-- ================================================== -->
@@ -815,12 +546,13 @@
     <div
         id="toast"
         class="toast"
-        role="alert"
-        aria-live="polite">
+        role="status"
+        aria-live="polite"
+        aria-atomic="true">
 
         <span id="toastMessage">
 
-            --
+            Mensagem
 
         </span>
 

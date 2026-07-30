@@ -6,6 +6,26 @@
 
 const config = {
 
+    event: {
+
+        date: "2026-11-21T17:00:00",
+
+        location: "Igbá Àṣẹ Iyá Aféfé Igbin Lórun - Àṣẹ Esmeralda",
+
+        address: "Rua Mariana do Rosário, 109 - Vila Recreio - Magé - RJ - 25900-970"
+
+    },
+
+    urls: {
+
+        rsvp: "https://forms.gle/7nrGWsSwQBR8tsn18",
+
+        googleMaps: "https://www.google.com/maps/dir//R.+Mariana+do+Ros%C3%A1rio,+109+-+Vila+Recreio,+Mag%C3%A9+-+RJ,+25900-970/@-22.7749,-43.2914,17z/data=!4m18!1m8!3m7!1s0x990ad239448339:0x56e548d8d0f97534!2sR.+Mariana+do+Ros%C3%A1rio,+109+-+Vila+Recreio,+Mag%C3%A9+-+RJ,+25900-970!3b1!8m2!3d-22.6450252!4d-43.2053367!16s%2Fg%2F11x64xg80t!4m8!1m0!1m5!1m1!1s0x990ad239448339:0x56e548d8d0f97534!2m2!1d-43.2053367!2d-22.6450252!3e0!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDcyMi4wIKXMDSoASAFQAw%3D%3D",
+
+        waze: "https://waze.com/ul/h75cr0vdgj"
+
+    },
+
     toast: {
 
         duration: 5000
@@ -15,59 +35,11 @@ const config = {
 };
 
 /* ==========================================================
-   DADOS DO SISTEMA
-========================================================== */
-
-const system = {
-
-    name: "Eventos de Axé",
-
-    description:
-        "Plataforma para gerenciamento de convites, RSVP e eventos de comunidades de matriz africana.",
-
-    developer: {
-
-        name: "Rafael Brito",
-
-        instagram: "https://www.instagram.com/raphbrito",
-
-        github: "https://github.com/raphbrito",
-    
-    },
-
-    repository: "https://github.com/raphbrito/Eventos-de-Axe",
-
-    version: "1.0.0"
-
-};
-
-
-/* ==========================================================
-   DADOS DO EVENTO
-========================================================== */
-
-const event = EVENTO;
-
-/* ==========================================================
    DOM
 ========================================================== */
 
 const dom = {
 
-    hero: {
-
-        logo: document.getElementById("heroLogo"),
-
-        subtitle: document.querySelector(".hero-subtitle"),
-
-        title: document.getElementById("heroTitle"),
-
-        celebrant: document.getElementById("heroName"),
-
-        message: document.getElementById("heroDescription")
-
-    },
-    
     countdown: {
 
         days: document.getElementById("days"),
@@ -80,7 +52,7 @@ const dom = {
 
     },
 
-    eventInfo: {
+    event: {
 
         date: document.getElementById("eventDate"),
 
@@ -89,18 +61,6 @@ const dom = {
         location: document.getElementById("eventLocation"),
 
         address: document.getElementById("eventAddress")
-
-    },
-
-    rsvp: {
-
-        description: document.getElementById("rsvpDescription")
-
-    },
-
-    location: {
-
-        description: document.getElementById("locationDescription")
 
     },
 
@@ -130,287 +90,9 @@ const dom = {
 
         currentYear: document.getElementById("currentYear")
 
-    },
-
-    system: {
-
-        name: document.getElementById("systemName"),
-
-        description: document.getElementById("systemDescription"),
-
-        developer: document.getElementById("systemDeveloper"),
-
-        instagram: document.getElementById("systemInstagram"),
-
-        github: document.getElementById("systemGithub"),
-
-        repository: document.getElementById("systemRepository")
-
-    },
+    }
 
 };
-
-/* ==========================================================
-   UTILITÁRIOS
-========================================================== */
-
-const DateUtils = (() => {
-
-    "use strict";
-
-    /* ==========================================================
-       CONSTANTES
-    ========================================================== */
-
-    const BRAZILIAN_DATE_PATTERN =
-        /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2}|\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/;
-
-    const ISO_DATE_PATTERN =
-        /^\d{4}-\d{2}-\d{2}(T.*)?$/;
-
-    /* ==========================================================
-       PARSER
-    ========================================================== */
-
-    function parse(value) {
-
-        if (value instanceof Date) {
-
-            return new Date(value.getTime());
-
-        }
-
-        if (
-            typeof value === "number" &&
-            Number.isFinite(value)
-        ) {
-
-            const date = new Date(value);
-
-            if (Number.isNaN(date.getTime())) {
-
-                throw new Error(
-                    `Data inválida: ${value}`
-                );
-
-            }
-
-            return date;
-
-        }
-
-        if (typeof value !== "string") {
-
-            throw new Error(
-                `Tipo de data não suportado: ${typeof value}`
-            );
-
-        }
-
-        const input = value.trim();
-
-        if (!input) {
-
-            throw new Error(
-                "A data informada está vazia."
-            );
-
-        }
-
-        if (ISO_DATE_PATTERN.test(input)) {
-
-            const date = new Date(input);
-
-            if (Number.isNaN(date.getTime())) {
-
-                throw new Error(
-                    `Data ISO inválida: "${value}".`
-                );
-
-            }
-
-            return date;
-
-        }
-
-        const brazilianMatch =
-            input.match(BRAZILIAN_DATE_PATTERN);
-
-        if (brazilianMatch) {
-
-            let [
-                ,
-                day,
-                month,
-                year,
-                hour = "0",
-                minute = "0",
-                second = "0"
-            ] = brazilianMatch;
-
-            day = Number(day);
-            month = Number(month);
-            hour = Number(hour);
-            minute = Number(minute);
-            second = Number(second);
-
-            if (year.length === 2) {
-
-                year = Number(`20${year}`);
-
-            } else {
-
-                year = Number(year);
-
-            }
-
-            const date = new Date(
-                year,
-                month - 1,
-                day,
-                hour,
-                minute,
-                second
-            );
-
-            if (
-
-                date.getFullYear() !== year ||
-
-                date.getMonth() !== (month - 1) ||
-
-                date.getDate() !== day ||
-
-                date.getHours() !== hour ||
-
-                date.getMinutes() !== minute ||
-
-                date.getSeconds() !== second
-
-            ) {
-
-                throw new Error(
-                    `Data inválida: "${value}".`
-                );
-
-            }
-
-            return date;
-
-        }
-
-        throw new Error(
-            `Formato de data não suportado: "${value}".`
-        );
-
-    }
-
-    /* ==========================================================
-       VALIDAÇÃO
-    ========================================================== */
-
-    function isValid(value) {
-
-        try {
-
-            parse(value);
-
-            return true;
-
-        } catch {
-
-            return false;
-
-        }
-
-    }
-
-    /* ==========================================================
-       FORMATAÇÃO
-    ========================================================== */
-
-    function short(value) {
-
-        return parse(value).toLocaleDateString(
-            "pt-BR",
-            {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric"
-            }
-        );
-
-    }
-
-    function long(value) {
-
-        return parse(value).toLocaleDateString(
-            "pt-BR",
-            {
-                weekday: "long",
-                day: "2-digit",
-                month: "long",
-                year: "numeric"
-            }
-        );
-
-    }
-
-    function time(value) {
-
-        return parse(value).toLocaleTimeString(
-            "pt-BR",
-            {
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
-
-    }
-
-    function dateTime(value) {
-
-        return `${short(value)} às ${time(value)}`;
-
-    }
-
-    function iso(value) {
-
-        return parse(value).toISOString();
-
-    }
-
-    function rfc(value) {
-
-        return parse(value).toUTCString();
-
-    }
-
-    /* ==========================================================
-       API PÚBLICA
-    ========================================================== */
-
-    return {
-
-        parse,
-
-        isValid,
-
-        short,
-
-        long,
-
-        time,
-
-        dateTime,
-
-        iso,
-
-        rfc
-
-    };
-
-})();
 
 /* ==========================================================
    ESTADO DA APLICAÇÃO
@@ -442,52 +124,57 @@ document.addEventListener(
 
 function initializeEventInformation() {
 
-    dom.eventInfo.date.textContent =
+    const eventDate = new Date(
 
-        DateUtils.long(
-            event.data
+        config.event.date
+
+    );
+
+    dom.event.date.textContent =
+
+        eventDate.toLocaleDateString(
+
+            "pt-BR",
+
+            {
+
+                weekday: "long",
+
+                day: "2-digit",
+
+                month: "long",
+
+                year: "numeric"
+
+            }
+
         );
 
-    dom.eventInfo.time.textContent =
+    dom.event.time.textContent =
 
-        event.horario;
+        eventDate.toLocaleTimeString(
 
-    dom.eventInfo.location.textContent =
+            "pt-BR",
 
-        event.local;
+            {
 
-    dom.eventInfo.address.textContent =
+                hour: "2-digit",
 
-        `${event.endereco} - ${event.bairro} - ${event.cidade} - ${event.estado} - ${event.cep}`;
+                minute: "2-digit"
 
-}
+            }
 
-/* ==========================================================
-   HERO
-========================================================== */
+        );
 
-function initializeHero() {
+    dom.event.location.textContent =
 
-    dom.hero.logo.src =
-        event.identidadeVisual.logo;
+        config.event.location;
 
-    dom.hero.logo.alt =
-        `Logo do ${event.nomeEvento}`;
+    dom.event.address.textContent =
 
-    dom.hero.subtitle.textContent =
-        event.subtituloHero;
-
-    dom.hero.title.textContent =
-        event.nomeEvento;
-
-    dom.hero.celebrant.textContent =
-        event.celebrante;
-
-    dom.hero.message.textContent =
-        event.mensagemHero;
+        config.event.address;
 
 }
-
 
 /* ==========================================================
    CONTAGEM REGRESSIVA
@@ -539,9 +226,9 @@ function getRemainingTime() {
 
     const now = new Date();
 
-    const eventDate = DateUtils.parse(
+    const eventDate = new Date(
 
-        `${event.data} ${event.horario}`
+        config.event.date
 
     );
 
@@ -659,30 +346,6 @@ function initializeFooter() {
 
         new Date().getFullYear();
 
-    dom.system.name.textContent =
-
-        system.name;
-
-    dom.system.description.textContent =
-
-        system.description;
-
-    dom.system.developer.textContent =
-
-        system.developer.name;
-
-    dom.system.instagram.href =
-
-        system.developer.instagram;
-
-    dom.system.github.href =
-
-        system.developer.github;
-
-    dom.system.repository.href =
-
-        system.repository;
-
 }
 
 /* ==========================================================
@@ -735,7 +398,7 @@ function initializeButtons() {
 
 function openRsvp() {
 
-    if (!event.rsvp) {
+    if (!config.urls.rsvp) {
 
         showToast(
 
@@ -753,7 +416,7 @@ function openRsvp() {
 
     openExternalLink(
 
-        event.rsvp.link
+        config.urls.rsvp
 
     );
 
@@ -765,7 +428,7 @@ function openRsvp() {
 
 function openGoogleMaps() {
 
-    if (!event.localizacao.googlemaps) {
+    if (!config.urls.googleMaps) {
 
         showToast(
 
@@ -783,7 +446,7 @@ function openGoogleMaps() {
 
     openExternalLink(
 
-        event.localizacao.googleMaps
+        config.urls.googleMaps
 
     );
 
@@ -795,7 +458,7 @@ function openGoogleMaps() {
 
 function openWaze() {
 
-    if (!event.localizacao.waze) {
+    if (!config.urls.waze) {
 
         showToast(
 
@@ -813,7 +476,7 @@ function openWaze() {
 
     openExternalLink(
 
-        event.localizacao.waze
+        config.urls.waze
 
     );
 
@@ -907,7 +570,7 @@ function showToast(title, message, type = "success") {
 
         hideToast,
 
-        config.toast.duration
+        config.app.toastDuration
 
     );
 
@@ -943,8 +606,6 @@ function hideToast() {
 
 function initializePage() {
 
-    initializeHero();
-
     initializeCountdown();
 
     initializeEventInformation();
@@ -952,7 +613,6 @@ function initializePage() {
     initializeFooter();
 
 }
-
 
 /* ==========================================================
    APLICAÇÃO
