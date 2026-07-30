@@ -29,11 +29,13 @@ const system = {
 
         name: "Rafael Brito",
 
+        instagram: "https://www.instagram.com/raphbrito",
+
         github: "https://github.com/raphbrito",
-
-        repository: "https://github.com/raphbrito/Eventos-de-Axe"
-
+    
     },
+
+    repository: "https://github.com/raphbrito/Eventos-de-Axe",
 
     version: "1.0.0"
 
@@ -111,6 +113,8 @@ const dom = {
         description: document.getElementById("systemDescription"),
 
         developer: document.getElementById("systemDeveloper"),
+
+        instagram: document.getElementById("systemInstagram"),
 
         github: document.getElementById("systemGithub"),
 
@@ -599,9 +603,9 @@ function initializeFooter() {
 
         system.developer.name;
 
-    dom.system.developer.href =
+    dom.system.instagram.href =
 
-        system.developer.github;
+        system.developer.instagram;
 
     dom.system.github.href =
 
@@ -609,7 +613,7 @@ function initializeFooter() {
 
     dom.system.repository.href =
 
-        system.developer.repository;
+        system.repository;
 
 }
 
