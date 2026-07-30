@@ -96,8 +96,8 @@ const dom = {
         currentYear: document.getElementById("currentYear")
 
     }
-
-};
+    
+    };
 
 /* ==========================================================
    ESTADO DA APLICAÇÃO
@@ -350,6 +350,30 @@ function initializeFooter() {
     dom.footer.currentYear.textContent =
 
         new Date().getFullYear();
+
+    dom.system.name.textContent =
+
+        system.name;
+
+    dom.system.description.textContent =
+
+        system.description;
+
+    dom.system.developer.textContent =
+
+        system.developer.name;
+
+    dom.system.developer.href =
+
+        system.developer.github;
+
+    dom.system.github.href =
+
+        system.developer.github;
+
+    dom.system.repository.href =
+
+        system.developer.repository;
 
 }
 
@@ -631,4 +655,5 @@ function initialize() {
 
     initializeToast();
 
+    initializeSystem();
 }
