@@ -102,17 +102,17 @@ const EVENTO = {
 
     identidadeVisual: {
 
-        logo: "/img/logo-evento.png",
+        logo: "img/logo-evento.png",
 
-        fundo: "/img/fundo.png",
+        fundo: "img/fundo.png",
 
-        convite: "/img/convite.png",
+        convite: "img/convite.png",
 
-        brasaoAseEsmeralda: "/img/brasao1.png",
+        brasaoAseEsmeralda: "img/brasao1.png",
 
-        brasaoAseTopazio: "/img/brasao2.png",
+        brasaoAseTopazio: "img/brasao2.png",
 
-        favicon: "/favicon/logo-evento.ico",
+        favicon: "img/favicon/logo-evento.ico",
 
         imagemCompartilhamento: ""
 

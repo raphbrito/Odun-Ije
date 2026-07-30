@@ -2,7 +2,7 @@
 /* ELEMENTOS */
 /* ================================================== */
 
-const dom = {
+const elements = {
 
     /* Login */
 
@@ -466,15 +466,15 @@ function showToast(
 
     );
 
-    dom.toastMessage.textContent =
+    elements.toastMessage.textContent =
 
         message;
 
-    dom.toast.className =
+    elements.toast.className =
 
         `toast toast-${type}`;
 
-    dom.toast.classList.add(
+    elements.toast.classList.add(
 
         "is-visible"
 
@@ -498,7 +498,7 @@ function hideToast() {
 
     );
 
-    dom.toast.classList.remove(
+    elements.toast.classList.remove(
 
         "is-visible"
 
@@ -591,7 +591,7 @@ function createExportContext() {
 
         event: {
 
-            name: event.nome,
+            name: event.nomeEvento,
 
             date: DateUtils.long(
 
@@ -609,9 +609,11 @@ function createExportContext() {
 
         },
 
+        guests: state.dashboard?.convidados ?? [],
+
         generatedAt: new Date(),
 
-        generatedAtFormatted: DateUtils.full(
+        generatedAtFormatted: DateUtils.dateTime(
 
             new Date()
 

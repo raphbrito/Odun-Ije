@@ -163,7 +163,7 @@ const DateUtils = (() => {
     ========================================================== */
 
     const BRAZILIAN_DATE_PATTERN =
-        /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2}|\d{4})$/;
+        /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2}|\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/;
 
     const ISO_DATE_PATTERN =
         /^\d{4}-\d{2}-\d{2}(T.*)?$/;
@@ -242,11 +242,17 @@ const DateUtils = (() => {
                 ,
                 day,
                 month,
-                year
+                year,
+                hour = "0",
+                minute = "0",
+                second = "0"
             ] = brazilianMatch;
 
             day = Number(day);
             month = Number(month);
+            hour = Number(hour);
+            minute = Number(minute);
+            second = Number(second);
 
             if (year.length === 2) {
 
@@ -261,7 +267,10 @@ const DateUtils = (() => {
             const date = new Date(
                 year,
                 month - 1,
-                day
+                day,
+                hour,
+                minute,
+                second
             );
 
             if (
@@ -270,7 +279,13 @@ const DateUtils = (() => {
 
                 date.getMonth() !== (month - 1) ||
 
-                date.getDate() !== day
+                date.getDate() !== day ||
+
+                date.getHours() !== hour ||
+
+                date.getMinutes() !== minute ||
+
+                date.getSeconds() !== second
 
             ) {
 
@@ -768,7 +783,7 @@ function openGoogleMaps() {
 
     openExternalLink(
 
-        event.localizacao.googlemaps
+        event.localizacao.googleMaps
 
     );
 
