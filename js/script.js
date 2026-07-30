@@ -54,6 +54,20 @@ const event = EVENTO;
 
 const dom = {
 
+    hero: {
+
+        logo: document.getElementById("heroLogo"),
+
+        subtitle: document.querySelector(".hero-subtitle"),
+
+        title: document.getElementById("heroTitle"),
+
+        celebrant: document.getElementById("heroName"),
+
+        message: document.getElementById("heroDescription")
+
+    },
+    
     countdown: {
 
         days: document.getElementById("days"),
@@ -75,6 +89,18 @@ const dom = {
         location: document.getElementById("eventLocation"),
 
         address: document.getElementById("eventAddress")
+
+    },
+
+    rsvp: {
+
+        description: document.getElementById("rsvpDescription")
+
+    },
+
+    location: {
+
+        description: document.getElementById("locationDescription")
 
     },
 
@@ -422,6 +448,33 @@ function initializeEventInformation() {
 }
 
 /* ==========================================================
+   HERO
+========================================================== */
+
+function initializeHero() {
+
+    dom.hero.logo.src =
+        event.identidadeVisual.logo;
+
+    dom.hero.logo.alt =
+        `Logo do ${event.nomeEvento}`;
+
+    dom.hero.subtitle.textContent =
+        event.subtituloHero;
+
+    dom.hero.title.textContent =
+        event.nomeEvento;
+
+    dom.hero.celebrant.textContent =
+        event.celebrante;
+
+    dom.hero.message.textContent =
+        event.mensagemHero;
+
+}
+
+
+/* ==========================================================
    CONTAGEM REGRESSIVA
 ========================================================== */
 
@@ -685,7 +738,7 @@ function openRsvp() {
 
     openExternalLink(
 
-        event.rsvp
+        event.rsvp.link
 
     );
 
@@ -697,7 +750,7 @@ function openRsvp() {
 
 function openGoogleMaps() {
 
-    if (!event.googleMaps) {
+    if (!event.localizacao.googlemaps) {
 
         showToast(
 
@@ -715,7 +768,7 @@ function openGoogleMaps() {
 
     openExternalLink(
 
-        event.googleMaps
+        event.localizacao.googlemaps
 
     );
 
@@ -727,7 +780,7 @@ function openGoogleMaps() {
 
 function openWaze() {
 
-    if (!event.waze) {
+    if (!event.localizacao.waze) {
 
         showToast(
 
@@ -745,7 +798,7 @@ function openWaze() {
 
     openExternalLink(
 
-        event.waze
+        event.localizacao.waze
 
     );
 
@@ -875,6 +928,8 @@ function hideToast() {
 
 function initializePage() {
 
+    initializeHero();
+
     initializeCountdown();
 
     initializeEventInformation();
@@ -882,6 +937,7 @@ function initializePage() {
     initializeFooter();
 
 }
+
 
 /* ==========================================================
    APLICAÇÃO
