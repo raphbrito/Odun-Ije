@@ -4,6 +4,7 @@ const system = {
     description: "Plataforma para gerenciamento de convites, RSVP e eventos de comunidades de matriz africana.",
     developer: {
         name: "Rafael Brito",
+        instagram: "http>//instagram.com/raphbrito",
         github: "https://github.com/raphbrito",
         repository: "https://github.com/raphbrito/Eventos-de-Axe"
     },
@@ -23,7 +24,7 @@ function initializeSystemFooter() {
     setText("systemName", system.name);
     setText("systemDescription", system.description);
     setText("systemDeveloper", system.developer.name);
-    setLink("systemDeveloper", system.developer.github);
+    setLink("systemDeveloper", system.developer.instagram);
     setLink("systemGithub", system.developer.github);
     setLink("systemRepository", system.developer.repository);
 }
