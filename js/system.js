@@ -4,7 +4,7 @@ const system = {
     description: "Plataforma para gerenciamento de convites, RSVP e eventos de comunidades de matriz africana.",
     developer: {
         name: "Rafael Brito",
-        instagram: "http>//instagram.com/raphbrito",
+        instagram: "http://instagram.com/raphbrito",
         github: "https://github.com/raphbrito",
         repository: "https://github.com/raphbrito/Eventos-de-Axe"
     },
