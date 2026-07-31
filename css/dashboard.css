@@ -141,11 +141,12 @@
     gap: .9rem;
 }
 .stats-card-label {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-}
-.stats-card-value {
     color: var(--color-primary);
+    font-family: var(--font-title);
+    font-size: var(--text-lg);
+    font-weight: var(--text-semibold);
+}
+.stats-card-value {    
     font-size: var(--text-md);
     font-weight: var(--text-regular);
     line-height: var(--line-height-normal);
