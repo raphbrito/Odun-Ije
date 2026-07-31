@@ -1,6 +1,6 @@
 /** Dados e apresentação do rodapé institucional do projeto. */
 const system = {
-    name: "Eventos de Axé",
+    name: "Eventos de Axé ©",
     description: "Plataforma para gerenciamento de convites, RSVP e eventos de comunidades de matriz africana.",
     developer: {
         name: "Rafael Brito",
