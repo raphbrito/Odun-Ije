@@ -145,6 +145,7 @@
     color: var(--color-text-muted);
 }
 .stats-card-value {
+    color: var(--color-primary);
     font-size: var(--text-md);
     font-weight: var(--text-regular);
     line-height: var(--line-height-normal);
